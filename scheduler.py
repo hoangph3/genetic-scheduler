@@ -5,14 +5,14 @@ from IPython.display import display
 import numpy as np
 from collections import defaultdict
 import math
+import os
 
 
 POPULATION_SIZE = 9
 NUMB_OF_ELITE_SCHEDULES = 1
 TOURNAMENT_SELECTION_SIZE = 3
-MUTATION_RATE = 0.05
+MUTATION_RATE = 0.1
 
-# rnd.seed()
 data = Data()
 
 
@@ -41,11 +41,10 @@ class Schedule:
         for classroom in data.get_classrooms():
             for subject in classroom.subjects:
                 for i in range(subject.n_lessons):
-                    subject_instructions = subject.instructors
                     newClass = Class(self._classNumb, subject, subject.n_lessons, classroom)
                     self._classNumb += 1
                     newClass.set_meeting_time(data.get_meeting_times()[rnd.randrange(0, len(data.meeting_times))])
-                    newClass.set_instructor(subject_instructions[rnd.randrange(0, len(subject_instructions))])
+                    newClass.set_instructor(subject.instructor)
                     self._classes.append(newClass)
 
         return self
@@ -60,16 +59,13 @@ class Schedule:
                         # constraint overlap meeting time
                         if (classes[i].meeting_time == classes[j].meeting_time):
                             self._numberOfConflicts += 1
-                        # constraint different instructor for one subject
-                        if (classes[i].subject == classes[j].subject) and (classes[i].instructor != classes[j].instructor):
-                            self._numberOfConflicts += 1
                         # constraint distance between two lessons in week
                         if (classes[i].subject == classes[j].subject):
                             if math.fabs(classes[i].meeting_time.day - classes[j].meeting_time.day) == 1:
                                 self._numberOfConflicts += 1
                             if classes[i].meeting_time.day == classes[j].meeting_time.day:
-                                # constraint lessons on (2,4,6) or (3,5,7)
-                                if classes[i].subject.n_lessons <= 6/2:
+                                # constraint subjects with less than 2 lessons
+                                if classes[i].subject.n_lessons <= 2:
                                     self._numberOfConflicts += 1
                                 else:
                                     if math.fabs(classes[i].meeting_time.lesson - classes[j].meeting_time.lesson) >= 2:
@@ -113,7 +109,7 @@ class Schedule:
                         self._numberOfConflicts += 1
                 # constraint starting from 1st lesson
                 if k2 not in [2, 7]:
-                    if len(v2) == 4 and (5 in v2):
+                    if len(v2) == 4 and (1 not in v2):
                         self._numberOfConflicts += 1
                 # constraint Thursday has the least lessons
                 if k2 == 5:
@@ -240,7 +236,6 @@ for lesson in schedule:
     )
 
 result = pd.DataFrame(result)
-# pd.set_option('mode.chained_assignment', None)
 for classroom, df in result.groupby("classroom"):
     df: pd.DataFrame
     df = df.sort_values(by=["day", "lesson"], inplace=False).to_dict("records")
@@ -249,4 +244,4 @@ for classroom, df in result.groupby("classroom"):
     for d in df:
         new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
     display(new_df)
-    new_df.to_csv("timetable.csv")
+    new_df.to_excel(os.path.join("report", "{}.xlsx".format(classroom)))

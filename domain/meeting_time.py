@@ -4,4 +4,4 @@ class MeetingTime(object):
     self.lesson = lesson
 
   def __str__(self) -> str:
-    return f"D{self.day}_T{self.lesson}"
+    return f"D{self.day}_L{self.lesson}"

@@ -1,8 +1,8 @@
 class Subject(object):
-  def __init__(self, name, n_lessons, instructors):
+  def __init__(self, name, n_lessons, instructor):
     self.name = name
     self.n_lessons = n_lessons
-    self.instructors = instructors
+    self.instructor = instructor
 
   def __str__(self) -> str:
     return self.name
