@@ -8,10 +8,11 @@ import math
 import os
 
 
-POPULATION_SIZE = 9
-NUMB_OF_ELITE_SCHEDULES = 1
-TOURNAMENT_SELECTION_SIZE = 3
-MUTATION_RATE = 0.1
+POPULATION_SIZE = 300
+NUMB_OF_ELITE_SCHEDULES = 2
+TOURNAMENT_SELECTION_SIZE = 4
+CROSSOVER_RATE = 0.9
+MUTATION_RATE = 0.03
 
 data = Data()
 
@@ -104,11 +105,14 @@ class Schedule:
                 if len(v2) < lessons_counter[k1]['average_lessons_per_day']:
                     self._numberOfConflicts += 1
                 # constraint distance between two lessons in one day
+                lessons_dist = []
                 for i in range(len(v2) - 1):
-                    if v2[i + 1] - v2[i] > 1:
+                    lessons_dist.append(v2[i+1] - v2[i])
+                if len(lessons_dist):
+                    if max(lessons_dist) > 1:
                         self._numberOfConflicts += 1
                 # constraint starting from 1st lesson
-                if k2 not in [2, 7]:
+                if k2 != 2:
                     if len(v2) == 4 and (1 not in v2):
                         self._numberOfConflicts += 1
                 # constraint Thursday has the least lessons
@@ -139,9 +143,12 @@ class GeneticAlgorithm:
             crossover_pop.get_schedules().append(pop.get_schedules()[i])
         i = NUMB_OF_ELITE_SCHEDULES
         while i < POPULATION_SIZE:
-            schedule1 = self._select_tournament_population(pop).get_schedules()[0]
-            schedule2 = self._select_tournament_population(pop).get_schedules()[0]
-            crossover_pop.get_schedules().append(self._crossover_schedule(schedule1, schedule2))
+            if CROSSOVER_RATE > rnd.random():
+                schedule1 = self._select_tournament_population(pop).get_schedules()[0]
+                schedule2 = self._select_tournament_population(pop).get_schedules()[0]
+                crossover_pop.get_schedules().append(self._crossover_schedule(schedule1, schedule2))
+            else:
+                crossover_pop.get_schedules().append(pop.get_schedules()[i])
             i += 1
         return crossover_pop
 
@@ -212,12 +219,10 @@ def timetable():
     geneticAlgorithm = GeneticAlgorithm()
     while population.get_schedules()[0].get_fitness() != 1.0:
         generation_num += 1
-        print('\n> Generation #' + str(generation_num))
         population = geneticAlgorithm.evolve(population)
         population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
         schedule = population.get_schedules()[0].get_classes()
-        print('\n> Number of conflicts #' + str(population.get_schedules()[0]._numberOfConflicts))
-        # break
+        print('> Generation #{}, Number of conflicts #{}'.format(generation_num, population.get_schedules()[0]._numberOfConflicts))
 
     return schedule
 
@@ -245,3 +250,4 @@ for classroom, df in result.groupby("classroom"):
         new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
     display(new_df)
     new_df.to_excel(os.path.join("report", "{}.xlsx".format(classroom)))
+    new_df.to_csv(os.path.join("report", "{}.csv".format(classroom)))

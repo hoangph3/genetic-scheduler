@@ -25,7 +25,7 @@ class Data(object):
     # creating instructors
     self.instructors = [
       Instructor(name="T00", classroom="6A"),
-      Instructor(name="T01"),
+      Instructor(name="T01", classroom="6B"),
       Instructor(name="T02"),
       Instructor(name="T03"),
       Instructor(name="T04"),
@@ -36,9 +36,7 @@ class Data(object):
       Instructor(name="T09"),
       Instructor(name="T10"),
       Instructor(name="T11"),
-      Instructor(name="T12"),
-      Instructor(name="T13", classroom="6B"),
-      Instructor(name="T14"),
+      Instructor(name="T12")
     ]
 
     # create classrooms with subjects
@@ -57,20 +55,20 @@ class Data(object):
         Subject(name="CN", n_lessons=1, instructor=self.instructors[10]),
         Subject(name="The", n_lessons=2, instructor=self.instructors[11]),
       ]),
-      # Classroom(name="6B", subjects=[
-      #   Subject(name="Toan", n_lessons=4, instructor=self.instructors[12]),
-      #   Subject(name="Ly", n_lessons=3, instructor=self.instructors[1]),
-      #   Subject(name="Hoa", n_lessons=3, instructor=self.instructors[2]),
-      #   Subject(name="Van", n_lessons=4, instructor=self.instructors[13]),
-      #   Subject(name="Anh", n_lessons=2, instructor=self.instructors[4]),
-      #   Subject(name="Sinh", n_lessons=2, instructor=self.instructors[5]),
-      #   Subject(name="Su", n_lessons=1, instructor=self.instructors[6]),
-      #   Subject(name="Dia", n_lessons=1, instructor=self.instructors[7]),
-      #   Subject(name="GDCD", n_lessons=1, instructor=self.instructors[8]),
-      #   Subject(name="Tin", n_lessons=2, instructor=self.instructors[14]),
-      #   Subject(name="CN", n_lessons=1, instructor=self.instructors[12]),
-      #   Subject(name="The", n_lessons=2, instructor=self.instructors[11]),
-      # ]),
+      Classroom(name="6B", subjects=[
+        Subject(name="Toan", n_lessons=4, instructor=self.instructors[12]),
+        Subject(name="Ly", n_lessons=3, instructor=self.instructors[1]),
+        Subject(name="Hoa", n_lessons=3, instructor=self.instructors[2]),
+        Subject(name="Van", n_lessons=4, instructor=self.instructors[3]),
+        Subject(name="Anh", n_lessons=2, instructor=self.instructors[4]),
+        Subject(name="Sinh", n_lessons=2, instructor=self.instructors[5]),
+        Subject(name="Su", n_lessons=1, instructor=self.instructors[6]),
+        Subject(name="Dia", n_lessons=1, instructor=self.instructors[7]),
+        Subject(name="GDCD", n_lessons=1, instructor=self.instructors[8]),
+        Subject(name="Tin", n_lessons=2, instructor=self.instructors[9]),
+        Subject(name="CN", n_lessons=1, instructor=self.instructors[12]),
+        Subject(name="The", n_lessons=2, instructor=self.instructors[11]),
+      ]),
     ]
 
   def get_meeting_times(self):
