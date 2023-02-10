@@ -19,6 +19,7 @@ python3 utils.py
 
 3. Access the UI:
 * [mongo express](http://localhost:8081)
+
 You can view or edit the schedule database here.
 
 ## Generating schedule
