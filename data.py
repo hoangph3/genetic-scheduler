@@ -1,4 +1,6 @@
+import pymongo
 from domain import Classroom, Subject, Instructor, MeetingTime
+from utils import get_mongo_uri
 
 
 class Data(object):
@@ -23,59 +25,53 @@ class Data(object):
         self.meeting_times.append(MeetingTime(day=day, lesson=lesson))
 
     # creating instructors
-    self.instructors = [
-      Instructor(name="T00", classroom="6A"),
-      Instructor(name="T01", classroom="6B"),
-      Instructor(name="T02"),
-      Instructor(name="T03"),
-      Instructor(name="T04"),
-      Instructor(name="T05"),
-      Instructor(name="T06"),
-      Instructor(name="T07"),
-      Instructor(name="T08"),
-      Instructor(name="T09"),
-      Instructor(name="T10"),
-      Instructor(name="T11"),
-      Instructor(name="T12")
-    ]
+    myclient = pymongo.MongoClient(get_mongo_uri())
+    mydb = myclient["schedule"]
+    mycol = mydb["classroom"]
 
-    # create classrooms with subjects
-    self.classrooms = [
-      Classroom(name="6A", subjects=[
-        Subject(name="Toan", n_lessons=4, instructor=self.instructors[0]),
-        Subject(name="Ly", n_lessons=3, instructor=self.instructors[1]),
-        Subject(name="Hoa", n_lessons=3, instructor=self.instructors[2]),
-        Subject(name="Van", n_lessons=4, instructor=self.instructors[3]),
-        Subject(name="Anh", n_lessons=2, instructor=self.instructors[4]),
-        Subject(name="Sinh", n_lessons=2, instructor=self.instructors[5]),
-        Subject(name="Su", n_lessons=1, instructor=self.instructors[6]),
-        Subject(name="Dia", n_lessons=1, instructor=self.instructors[7]),
-        Subject(name="GDCD", n_lessons=1, instructor=self.instructors[8]),
-        Subject(name="Tin", n_lessons=2, instructor=self.instructors[0]),
-        Subject(name="CN", n_lessons=1, instructor=self.instructors[10]),
-        Subject(name="The", n_lessons=2, instructor=self.instructors[11]),
-      ]),
-      Classroom(name="6B", subjects=[
-        Subject(name="Toan", n_lessons=4, instructor=self.instructors[12]),
-        Subject(name="Ly", n_lessons=3, instructor=self.instructors[1]),
-        Subject(name="Hoa", n_lessons=3, instructor=self.instructors[2]),
-        Subject(name="Van", n_lessons=4, instructor=self.instructors[3]),
-        Subject(name="Anh", n_lessons=2, instructor=self.instructors[4]),
-        Subject(name="Sinh", n_lessons=2, instructor=self.instructors[5]),
-        Subject(name="Su", n_lessons=1, instructor=self.instructors[6]),
-        Subject(name="Dia", n_lessons=1, instructor=self.instructors[7]),
-        Subject(name="GDCD", n_lessons=1, instructor=self.instructors[8]),
-        Subject(name="Tin", n_lessons=2, instructor=self.instructors[9]),
-        Subject(name="CN", n_lessons=1, instructor=self.instructors[12]),
-        Subject(name="The", n_lessons=2, instructor=self.instructors[11]),
-      ]),
-    ]
+    instructors = {}
+    classes = list(mycol.find({}))
+    for classroom in classes:
+      for subject in classroom["subject"]:
+        if subject['instructor'] not in instructors:
+          instructors[subject['instructor']] = len(instructors)
+          self.instructors.append(Instructor(name=subject['instructor'], classroom=''))
+
+    for instructor in self.instructors:
+      for classroom in classes:
+        if instructor.name == classroom['main_instructor']:
+          instructor.classroom = classroom['name']
+          break
+
+    instructors = {}
+    for instructor in self.instructors:
+      instructors[instructor.name] = instructor
+
+    for classroom in classes:
+      subjects = []
+      for subject in classroom['subject']:
+        subjects.append(Subject(name=subject['name'], n_lessons=subject['n_lessons'], instructor=instructors[subject['instructor']]))
+      self.classrooms.append(Classroom(name=classroom['name'], subjects=subjects))
+
+    # for instructor in self.instructors:
+    #   print(instructor.name, instructor.classroom)
+    # for classroom in self.classrooms:
+    #   print(classroom.name)
+    #   for subject in classroom.subjects:
+    #     print(subject.name, subject.n_lessons, subject.instructor.name, subject.instructor.classroom)
+
 
   def get_meeting_times(self):
     return self.meeting_times
 
+
   def get_instructors(self):
     return self.instructors
 
+
   def get_classrooms(self):
     return self.classrooms
+
+
+if __name__ == "__main__":
+  data = Data()

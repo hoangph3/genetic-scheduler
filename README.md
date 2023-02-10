@@ -1,2 +1,1 @@
-# genetic-scheduler
-Using Genetic Algorithms to Schedule Timetables
+# Generating Schedule based on Genetic Algorithm

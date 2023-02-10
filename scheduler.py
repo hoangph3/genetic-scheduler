@@ -1,11 +1,13 @@
-from data import Data
+from collections import defaultdict
+from IPython.display import display
+from loguru import logger
 import random as rnd
 import pandas as pd
-from IPython.display import display
 import numpy as np
-from collections import defaultdict
 import math
 import os
+
+from data import Data
 
 
 POPULATION_SIZE = 300
@@ -212,6 +214,9 @@ class Class:
 
 
 def timetable():
+    # log
+    logger.add("schedule.log", rotation="500 MB")
+    # run
     schedule = []
     population = Population(POPULATION_SIZE)
     generation_num = 0
@@ -222,32 +227,29 @@ def timetable():
         population = geneticAlgorithm.evolve(population)
         population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
         schedule = population.get_schedules()[0].get_classes()
-        print('> Generation #{}, Number of conflicts #{}'.format(generation_num, population.get_schedules()[0]._numberOfConflicts))
+        logger.info('> Generation #{}, Number of conflicts #{}'.format(generation_num, population.get_schedules()[0]._numberOfConflicts))
 
     return schedule
 
 
-schedule = timetable()
-result = []
-for lesson in schedule:
-    result.append(
-        {
-            "classroom": str(lesson.room),
-            "subject": str(lesson.subject),
-            "day": int(lesson.meeting_time.day),
-            "lesson": int(lesson.meeting_time.lesson),
-            "instructor": str(lesson.instructor)
-        }
-    )
-
-result = pd.DataFrame(result)
-for classroom, df in result.groupby("classroom"):
-    df: pd.DataFrame
-    df = df.sort_values(by=["day", "lesson"], inplace=False).to_dict("records")
-    new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=[2, 3, 4, 5, 6, 7])  
-    print('\n> Classroom #' + str(classroom))
+if __name__ == "__main__":
+    schedule = timetable()
+    df = []
+    for lesson in schedule:
+        df.append(
+            {
+                "classroom": str(lesson.room),
+                "subject": str(lesson.subject),
+                "day": int(lesson.meeting_time.day),
+                "lesson": int(lesson.meeting_time.lesson),
+                "instructor": str(lesson.instructor)
+            }
+        )
+    df = pd.DataFrame(df)
+    df = df.sort_values(by=["classroom", "day", "lesson"], inplace=False).to_dict("records")
+    new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=[2, 3, 4, 5, 6, 7])
     for d in df:
         new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
     display(new_df)
-    new_df.to_excel(os.path.join("report", "{}.xlsx".format(classroom)))
-    new_df.to_csv(os.path.join("report", "{}.csv".format(classroom)))
+    new_df.to_excel("report/schedule.xlsx")
+    new_df.to_csv("report/schedule.csv")
