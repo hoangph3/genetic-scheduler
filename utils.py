@@ -3,10 +3,10 @@ import pymongo
 import json
 
 
-MONGO_USER = os.getenv("MONGO_USER")
-MONGO_PASSWORD = os.getenv("MONGO_PASSWORD")
-MONGO_HOST = os.getenv("MONGO_HOST")
-MONGO_PORT = os.getenv("MONGO_PORT")
+MONGO_USER = os.getenv("MONGO_USER", "admin")
+MONGO_PASSWORD = os.getenv("MONGO_PASSWORD", "P4ssW0rD")
+MONGO_HOST = os.getenv("MONGO_HOST", "localhost")
+MONGO_PORT = os.getenv("MONGO_PORT", "27017")
 
 
 def get_mongo_uri():
@@ -28,3 +28,7 @@ def init_db():
 
     # close
     myclient.close()
+
+
+if __name__ == "__main__":
+    init_db()

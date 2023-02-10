@@ -5,6 +5,7 @@ import random as rnd
 import pandas as pd
 import numpy as np
 import math
+import time
 import os
 
 from data import Data
@@ -122,7 +123,7 @@ class Schedule:
                     if len(v2) > lessons_counter[k1]['average_lessons_per_day']:
                         self._numberOfConflicts += 1
 
-        return 1 / (1.0 * self._numberOfConflicts + 1)
+        return 1 / (self._numberOfConflicts + 1)
 
 
 class Population:
@@ -213,9 +214,12 @@ class Class:
         self.meeting_time = meeting_time
 
 
-def timetable():
+def timetable(path=None):
     # log
-    logger.add("schedule.log", rotation="500 MB")
+    if not os.path.exists(path):
+        os.makedirs(path)
+    logger.add(os.path.join(path, 'schedule.log'), rotation="500 MB")
+
     # run
     schedule = []
     population = Population(POPULATION_SIZE)
@@ -229,27 +233,40 @@ def timetable():
         schedule = population.get_schedules()[0].get_classes()
         logger.info('> Generation #{}, Number of conflicts #{}'.format(generation_num, population.get_schedules()[0]._numberOfConflicts))
 
-    return schedule
+    # save all valid schedule
+    for idx in range(len(population.get_schedules())):
+        solution = population.get_schedules()[idx]
+        if solution.get_fitness() != 1.0:
+            break
+        schedule = solution.get_classes()
+        # save one
+        result = []
+        for lesson in schedule:
+            result.append(
+                {
+                    "classroom": str(lesson.room),
+                    "subject": str(lesson.subject),
+                    "day": str(lesson.meeting_time.day),
+                    "lesson": int(lesson.meeting_time.lesson),
+                    "instructor": str(lesson.instructor)
+                }
+            )
+        result = pd.DataFrame(result)
+
+        dfs = []
+        for classroom, df in result.groupby("classroom"):
+            df: pd.DataFrame
+            df = df.sort_values(by=["day", "lesson"], inplace=False).to_dict("records")
+            new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=['Room', '2', '3', '4', '5', '6', '7'])
+            for d in df:
+                new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
+            new_df['Room'] = classroom
+            dfs.append(new_df)
+
+        dfs = pd.concat(dfs)
+        logger.info("> Schedule #{} \n {}".format(idx+1, dfs.to_string()))
+        dfs.to_csv(os.path.join(path, "schedule_{}.csv".format(idx+1)))
 
 
 if __name__ == "__main__":
-    schedule = timetable()
-    df = []
-    for lesson in schedule:
-        df.append(
-            {
-                "classroom": str(lesson.room),
-                "subject": str(lesson.subject),
-                "day": int(lesson.meeting_time.day),
-                "lesson": int(lesson.meeting_time.lesson),
-                "instructor": str(lesson.instructor)
-            }
-        )
-    df = pd.DataFrame(df)
-    df = df.sort_values(by=["classroom", "day", "lesson"], inplace=False).to_dict("records")
-    new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=[2, 3, 4, 5, 6, 7])
-    for d in df:
-        new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
-    display(new_df)
-    new_df.to_excel("report/schedule.xlsx")
-    new_df.to_csv("report/schedule.csv")
+    timetable(os.path.join("logs", str(int(time.time()))))
