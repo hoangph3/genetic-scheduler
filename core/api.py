@@ -9,7 +9,7 @@ import os
 def run_app(api_host='0.0.0.0', api_port=8080, debug=True):
     app = Flask(__name__)
     app.config['DEBUG'] = debug
-    files_index = AutoIndex(app, os.path.curdir + '/logs', add_url_rules=False)
+    files_index = AutoIndex(app, '/app/logs', add_url_rules=False)
 
 
     @app.route('/schedule/generate', methods=['POST'])
