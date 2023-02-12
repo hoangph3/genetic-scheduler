@@ -1,6 +1,6 @@
 import pymongo
 from domain import Classroom, Subject, Instructor, MeetingTime
-from utils import get_mongo_uri
+from utils.database import get_mongo_uri
 
 
 class Data(object):

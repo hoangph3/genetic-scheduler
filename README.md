@@ -1,27 +1,24 @@
 # Generating Schedule based on Genetic Algorithm
 
-## Install dependencies (python 3.7+)
-```sh
-pip3 install -r requirements.txt
-```
+## Deploy services
 
-## Deploy mongodb
-
-1. Run db:
+1. Run compose:
 ```sh
 docker-compose up -d
 ```
 
-2. Init db:
-```sh
-python3 utils.py
-```
-
-3. Access the UI:
+2. Access the UI:
 * [mongo express](http://localhost:8081) (you can view or edit the schedule database here)
 
-## Generating schedule
+## Use
+
+1. Generating schedules
+
 ```
-python3 scheduler.py
+[POST] http://localhost:8080/schedule/generate
 ```
-Verify the schedule with the constraints in `logs` directory.
+
+2. View schedules
+```
+[GET] http://localhost:8080/schedule/view
+```

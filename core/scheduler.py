@@ -1,14 +1,14 @@
 from collections import defaultdict
-from IPython.display import display
 from loguru import logger
 import random as rnd
 import pandas as pd
 import numpy as np
+import json
 import math
-import time
+import sys
 import os
 
-from data import Data
+from utils.data import Data
 
 
 POPULATION_SIZE = 300
@@ -237,7 +237,7 @@ def timetable(path=None):
     for idx in range(len(population.get_schedules())):
         solution = population.get_schedules()[idx]
         if solution.get_fitness() != 1.0:
-            break
+            continue
         schedule = solution.get_classes()
         # save one
         result = []
@@ -264,9 +264,13 @@ def timetable(path=None):
             dfs.append(new_df)
 
         dfs = pd.concat(dfs)
-        logger.info("> Schedule #{} \n {}".format(idx+1, dfs.to_string()))
+        dfs = dfs.fillna("")
+        logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(idx+1, solution._numberOfConflicts , dfs.to_string()))
+        # save csv
         dfs.to_csv(os.path.join(path, "schedule_{}.csv".format(idx+1)))
+        # save json
+        with open(os.path.join(path, "schedule_{}.json".format(idx+1)), "w") as f:
+            json.dump(dfs.to_dict('records'), f, indent=2)
 
-
-if __name__ == "__main__":
-    timetable(os.path.join("logs", str(int(time.time()))))
+    # kill thread
+    sys.exit()
