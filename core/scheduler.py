@@ -11,11 +11,12 @@ import os
 from utils.data import Data
 
 
-POPULATION_SIZE = 300
-NUMB_OF_ELITE_SCHEDULES = 2
-TOURNAMENT_SELECTION_SIZE = 4
-CROSSOVER_RATE = 0.9
-MUTATION_RATE = 0.03
+POPULATION_SIZE = int(os.getenv("POPULATION_SIZE", "300"))
+NUMB_OF_ELITE_SCHEDULES = int(os.getenv("NUMB_OF_ELITE_SCHEDULES", "2"))
+TOURNAMENT_SELECTION_SIZE = int(os.getenv("TOURNAMENT_SELECTION_SIZE", "4"))
+CROSSOVER_RATE = float(os.getenv("CROSSOVER_RATE", "0.9"))
+MUTATION_RATE = float(os.getenv("MUTATION_RATE", "0.03"))
+VERBOSE = int(os.getenv("VERBOSE", "100"))
 
 data = Data()
 
@@ -232,6 +233,34 @@ def timetable(path=None):
         population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
         schedule = population.get_schedules()[0].get_classes()
         logger.info('> Generation #{}, Number of conflicts #{}'.format(generation_num, population.get_schedules()[0]._numberOfConflicts))
+
+        if generation_num % VERBOSE == 0:
+            result = []
+            for lesson in schedule:
+                result.append(
+                    {
+                        "classroom": str(lesson.room),
+                        "subject": str(lesson.subject),
+                        "day": str(lesson.meeting_time.day),
+                        "lesson": int(lesson.meeting_time.lesson),
+                        "instructor": str(lesson.instructor)
+                    }
+                )
+            result = pd.DataFrame(result)
+
+            dfs = []
+            for classroom, df in result.groupby("classroom"):
+                df: pd.DataFrame
+                df = df.sort_values(by=["day", "lesson"], inplace=False).to_dict("records")
+                new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=['Room', '2', '3', '4', '5', '6', '7'])
+                for d in df:
+                    new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
+                new_df['Room'] = classroom
+                dfs.append(new_df)
+
+            dfs = pd.concat(dfs)
+            dfs = dfs.fillna("")
+            logger.info("> Schedule #temp, Number of conflicts #{} \n {}".format(population.get_schedules()[0]._numberOfConflicts , dfs.to_string()))
 
     # save all valid schedule
     for idx in range(len(population.get_schedules())):
