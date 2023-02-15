@@ -14,8 +14,8 @@ docker-compose up -d
 
 1. Generating schedules
 
-```
-[POST] http://localhost:8080/schedule/generate
+```sh
+curl -X POST http://localhost:8080/schedule/generate -H 'Content-Type: application/json' -d '{}'
 ```
 
 2. View schedules
