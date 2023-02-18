@@ -1,5 +1,6 @@
 from collections import defaultdict
 from loguru import logger
+from copy import deepcopy
 import random as rnd
 import pandas as pd
 import numpy as np
@@ -22,8 +23,8 @@ data = Data()
 
 
 class Schedule:
-    def __init__(self):
-        self._data = data
+    def __init__(self, _data):
+        self._data = _data
         self._classes = []
         self._numberOfConflicts = 0
         self._fitness = -1
@@ -43,14 +44,14 @@ class Schedule:
         return self._fitness
 
     def initialize(self):
-        for classroom in data.get_classrooms():
-            for subject in classroom.subjects:
-                for i in range(subject.n_lessons):
-                    newClass = Class(self._classNumb, subject, subject.n_lessons, classroom)
-                    self._classNumb += 1
-                    newClass.set_meeting_time(data.get_meeting_times()[rnd.randrange(0, len(data.meeting_times))])
-                    newClass.set_instructor(subject.instructor)
-                    self._classes.append(newClass)
+        classroom = self._data
+        for subject in classroom.subjects:
+            for i in range(subject.n_lessons):
+                newClass = Class(self._classNumb, subject, subject.n_lessons, classroom)
+                self._classNumb += 1
+                newClass.set_instructor(subject.instructor)
+                newClass.set_meeting_time(rnd.choice(list(subject.instructor.free_times.values())))
+                self._classes.append(newClass)
 
         return self
 
@@ -128,21 +129,23 @@ class Schedule:
 
 
 class Population:
-    def __init__(self, size):
+    def __init__(self, size, _data):
         self._size = size
-        self._data = data
-        self._schedules = [Schedule().initialize() for i in range(size)]
+        self._schedules = [Schedule(_data).initialize() for _ in range(size)]
 
     def get_schedules(self):
         return self._schedules
 
 
 class GeneticAlgorithm:
+    def __init__(self, _data):
+        self._data = _data
+
     def evolve(self, population):
         return self._mutate_population(self._crossover_population(population))
 
     def _crossover_population(self, pop):
-        crossover_pop = Population(0)
+        crossover_pop = Population(0, self._data)
         for i in range(NUMB_OF_ELITE_SCHEDULES):
             crossover_pop.get_schedules().append(pop.get_schedules()[i])
         i = NUMB_OF_ELITE_SCHEDULES
@@ -162,7 +165,7 @@ class GeneticAlgorithm:
         return population
 
     def _crossover_schedule(self, schedule1, schedule2):
-        crossoverSchedule = Schedule().initialize()
+        crossoverSchedule = Schedule(self._data).initialize()
         for i in range(0, len(crossoverSchedule.get_classes())):
             if rnd.random() > 0.5:
                 crossoverSchedule.get_classes()[i] = schedule1.get_classes()[i]
@@ -171,14 +174,14 @@ class GeneticAlgorithm:
         return crossoverSchedule
 
     def _mutate_schedule(self, mutateSchedule):
-        schedule = Schedule().initialize()
+        schedule = Schedule(self._data).initialize()
         for i in range(len(mutateSchedule.get_classes())):
             if MUTATION_RATE > rnd.random():
                 mutateSchedule.get_classes()[i] = schedule.get_classes()[i]
         return mutateSchedule
 
     def _select_tournament_population(self, pop):
-        tournament_pop = Population(0)
+        tournament_pop = Population(0, self._data)
         i = 0
         while i < TOURNAMENT_SELECTION_SIZE:
             tournament_pop.get_schedules().append(pop.get_schedules()[rnd.randrange(0, POPULATION_SIZE)])
@@ -221,57 +224,41 @@ def timetable(path=None):
         os.makedirs(path)
     logger.add(os.path.join(path, 'schedule.log'), rotation="500 MB")
 
-    # run
-    schedule = []
-    population = Population(POPULATION_SIZE)
-    generation_num = 0
-    population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
-    geneticAlgorithm = GeneticAlgorithm()
-    while population.get_schedules()[0].get_fitness() != 1.0:
-        generation_num += 1
-        population = geneticAlgorithm.evolve(population)
-        population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
-        schedule = population.get_schedules()[0].get_classes()
-        logger.info('> Generation #{}, Number of conflicts #{}'.format(generation_num, population.get_schedules()[0]._numberOfConflicts))
-
-        if generation_num % VERBOSE == 0:
-            result = []
+    # loop each classroom
+    last_classroom = None
+    for classroom in data.get_classrooms():
+        # update free times for instructor
+        if last_classroom is not None:
+            last_lesson = defaultdict(list)
             for lesson in schedule:
-                result.append(
-                    {
-                        "classroom": str(lesson.room),
-                        "subject": str(lesson.subject),
-                        "day": str(lesson.meeting_time.day),
-                        "lesson": int(lesson.meeting_time.lesson),
-                        "instructor": str(lesson.instructor)
-                    }
-                )
-            result = pd.DataFrame(result)
+                last_lesson[str(lesson.instructor)].append(str(lesson.meeting_time))
 
-            dfs = []
-            for classroom, df in result.groupby("classroom"):
-                df: pd.DataFrame
-                df = df.sort_values(by=["day", "lesson"], inplace=False).to_dict("records")
-                new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=['Room', '2', '3', '4', '5', '6', '7'])
-                for d in df:
-                    new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
-                new_df['Room'] = classroom
-                dfs.append(new_df)
+            for subject in classroom.subjects:
+                new_free_times = {}
+                if str(subject.instructor) in last_lesson:
+                    for k, v in data.get_free_times().items():
+                        if k not in last_lesson[str(subject.instructor)]:
+                            new_free_times[k] = v
+                subject.instructor.free_times = new_free_times
 
-            dfs = pd.concat(dfs)
-            dfs = dfs.fillna("")
-            logger.info("> Schedule #temp, Number of conflicts #{} \n {}".format(population.get_schedules()[0]._numberOfConflicts , dfs.to_string()))
+        # generate schedule per classroom
+        schedule = []
+        population = Population(POPULATION_SIZE, classroom)
+        generation_num = 0
+        population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
+        geneticAlgorithm = GeneticAlgorithm(classroom)
+        while population.get_schedules()[0].get_fitness() != 1.0:
+            generation_num += 1
+            population = geneticAlgorithm.evolve(population)
+            population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
+            schedule = population.get_schedules()[0].get_classes()
+            logger.info('> Generation #{}, Number of conflicts #{}'.format(generation_num, population.get_schedules()[0]._numberOfConflicts))
 
-    # save all valid schedule
-    for idx in range(len(population.get_schedules())):
-        solution = population.get_schedules()[idx]
-        if solution.get_fitness() != 1.0:
-            continue
-        schedule = solution.get_classes()
-        # save one
-        result = []
+        last_classroom = classroom
+        # save valid schedule
+        df = []
         for lesson in schedule:
-            result.append(
+            df.append(
                 {
                     "classroom": str(lesson.room),
                     "subject": str(lesson.subject),
@@ -280,25 +267,20 @@ def timetable(path=None):
                     "instructor": str(lesson.instructor)
                 }
             )
-        result = pd.DataFrame(result)
-
+        df = pd.DataFrame(df)
         dfs = []
-        for classroom, df in result.groupby("classroom"):
-            df: pd.DataFrame
-            df = df.sort_values(by=["day", "lesson"], inplace=False).to_dict("records")
-            new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=['Room', '2', '3', '4', '5', '6', '7'])
-            for d in df:
-                new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
-            new_df['Room'] = classroom
-            dfs.append(new_df)
-
+        df = df.sort_values(by=["day", "lesson"], inplace=False).to_dict("records")
+        new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=['Room', '2', '3', '4', '5', '6', '7'])
+        for d in df:
+            new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
+        new_df['Room'] = str(classroom)
+        dfs.append(new_df)
         dfs = pd.concat(dfs)
         dfs = dfs.fillna("")
-        logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(idx+1, solution._numberOfConflicts , dfs.to_string()))
-        # save csv
-        dfs.to_csv(os.path.join(path, "schedule_{}.csv".format(idx+1)))
-        # save json
-        with open(os.path.join(path, "schedule_{}.json".format(idx+1)), "w") as f:
+
+        logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(classroom, population.get_schedules()[0]._numberOfConflicts, dfs.to_string()))
+        dfs.to_csv(os.path.join(path, "schedule_{}.csv".format(classroom)))
+        with open(os.path.join(path, "schedule_{}.json".format(classroom)), "w") as f:
             json.dump(dfs.to_dict('records'), f, indent=2)
 
     # kill thread

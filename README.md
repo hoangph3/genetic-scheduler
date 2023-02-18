@@ -4,7 +4,7 @@
 
 1. Run compose:
 ```sh
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 2. Access the UI:

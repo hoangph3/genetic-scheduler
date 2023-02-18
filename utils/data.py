@@ -1,6 +1,7 @@
 import pymongo
 from domain import Classroom, Subject, Instructor, MeetingTime
 from utils.database import get_mongo_uri
+from copy import deepcopy
 
 
 class Data(object):
@@ -17,12 +18,15 @@ class Data(object):
     DAYS_OF_WEEK = [2, 3, 4, 5, 6, 7]
 
     # create meeting times
+    self.free_times = {}
     lessons = [_ for _ in range(1, N_LESSON_EACH_DAY + 1)]
     for day in DAYS_OF_WEEK:
       for lesson in lessons:
         if (day == 2 and lesson == 1) or (day == 7 and lesson == 5):
           continue
-        self.meeting_times.append(MeetingTime(day=day, lesson=lesson))
+        meeting_time = MeetingTime(day=day, lesson=lesson)
+        self.meeting_times.append(meeting_time)
+        self.free_times[str(meeting_time)] = meeting_time
 
     # creating instructors
     myclient = pymongo.MongoClient(get_mongo_uri())
@@ -35,7 +39,7 @@ class Data(object):
       for subject in classroom["subject"]:
         if subject['instructor'] not in instructors:
           instructors[subject['instructor']] = len(instructors)
-          self.instructors.append(Instructor(name=subject['instructor'], classroom=''))
+          self.instructors.append(Instructor(name=subject['instructor'], classroom='', free_times=self.free_times))
 
     for instructor in self.instructors:
       for classroom in classes:
@@ -54,7 +58,7 @@ class Data(object):
       self.classrooms.append(Classroom(name=classroom['name'], subjects=subjects))
 
     # for instructor in self.instructors:
-    #   print(instructor.name, instructor.classroom)
+      # print(instructor.name, instructor.classroom, instructor.free_times)
     # for classroom in self.classrooms:
     #   print(classroom.name)
     #   for subject in classroom.subjects:
@@ -65,13 +69,13 @@ class Data(object):
     return self.meeting_times
 
 
+  def get_free_times(self):
+    return self.free_times
+
+
   def get_instructors(self):
     return self.instructors
 
 
   def get_classrooms(self):
     return self.classrooms
-
-
-if __name__ == "__main__":
-  data = Data()
