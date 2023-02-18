@@ -1,6 +1,5 @@
 from collections import defaultdict
 from loguru import logger
-from copy import deepcopy
 import random as rnd
 import pandas as pd
 import numpy as np
@@ -18,8 +17,6 @@ TOURNAMENT_SELECTION_SIZE = int(os.getenv("TOURNAMENT_SELECTION_SIZE", "4"))
 CROSSOVER_RATE = float(os.getenv("CROSSOVER_RATE", "0.9"))
 MUTATION_RATE = float(os.getenv("MUTATION_RATE", "0.03"))
 VERBOSE = int(os.getenv("VERBOSE", "100"))
-
-data = Data()
 
 
 class Schedule:
@@ -218,7 +215,10 @@ class Class:
         self.meeting_time = meeting_time
 
 
-def timetable(path=None):
+def timetable(path=None, data=None):
+    # load data
+    data = Data(data)
+
     # log
     if not os.path.exists(path):
         os.makedirs(path)

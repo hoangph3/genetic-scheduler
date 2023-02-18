@@ -15,11 +15,15 @@ def run_app(api_host='0.0.0.0', api_port=8080, debug=True):
     @app.route('/schedule/generate', methods=['POST'])
     def generate():
         data = request.get_json()
-        path = os.path.join("logs", str(int(time.time())))
+        schedule_id = str(int(time.time()))
+        path = os.path.join("logs", schedule_id)
 
-        Thread(target=timetable, args=(path,)).start()
+        Thread(target=timetable, args=(path, data)).start()
 
-        return "Generating schedule ..."
+        return make_response(jsonify({
+            "message": "Generating schedule ...",
+            "id": schedule_id
+        }), 200)
 
 
     @app.route('/schedule/view')

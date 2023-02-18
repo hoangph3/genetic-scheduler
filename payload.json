@@ -1,8 +1,4 @@
-db = db.getSiblingDB('schedule');
-
-db.createCollection('classroom');
-
-db.classroom.insertMany([
+[
    {
         "name": "6A",
         "subject": [
@@ -57,4 +53,4 @@ db.classroom.insertMany([
         ],
         "main_instructor": "Ho01"
     }
-]);
+]

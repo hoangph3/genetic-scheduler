@@ -1,15 +1,13 @@
-import pymongo
 from domain import Classroom, Subject, Instructor, MeetingTime
-from utils.database import get_mongo_uri
-from copy import deepcopy
 
 
 class Data(object):
-  def __init__(self):
+  def __init__(self, data):
     self.meeting_times = []
     self.instructors = []
     self.subjects = []
     self.classrooms = []
+    self.data = data
     self.initialize()
 
   def initialize(self):
@@ -28,21 +26,15 @@ class Data(object):
         self.meeting_times.append(meeting_time)
         self.free_times[str(meeting_time)] = meeting_time
 
-    # creating instructors
-    myclient = pymongo.MongoClient(get_mongo_uri())
-    mydb = myclient["schedule"]
-    mycol = mydb["classroom"]
-
     instructors = {}
-    classes = list(mycol.find({}))
-    for classroom in classes:
+    for classroom in self.data:
       for subject in classroom["subject"]:
         if subject['instructor'] not in instructors:
           instructors[subject['instructor']] = len(instructors)
           self.instructors.append(Instructor(name=subject['instructor'], classroom='', free_times=self.free_times))
 
     for instructor in self.instructors:
-      for classroom in classes:
+      for classroom in self.data:
         if instructor.name == classroom['main_instructor']:
           instructor.classroom = classroom['name']
           break
@@ -51,18 +43,11 @@ class Data(object):
     for instructor in self.instructors:
       instructors[instructor.name] = instructor
 
-    for classroom in classes:
+    for classroom in self.data:
       subjects = []
       for subject in classroom['subject']:
         subjects.append(Subject(name=subject['name'], n_lessons=subject['n_lessons'], instructor=instructors[subject['instructor']]))
       self.classrooms.append(Classroom(name=classroom['name'], subjects=subjects))
-
-    # for instructor in self.instructors:
-      # print(instructor.name, instructor.classroom, instructor.free_times)
-    # for classroom in self.classrooms:
-    #   print(classroom.name)
-    #   for subject in classroom.subjects:
-    #     print(subject.name, subject.n_lessons, subject.instructor.name, subject.instructor.classroom)
 
 
   def get_meeting_times(self):

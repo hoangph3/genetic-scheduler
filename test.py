@@ -1,10 +1,11 @@
-from utils.data import Data
 from core.scheduler import timetable
 import os
 import time
+import json
 
 
 if __name__ == "__main__":
-    # Data()
+    with open('payload.json') as f:
+        data = json.load(f)
     path = os.path.join("logs", str(int(time.time())))
-    timetable(path)
+    timetable(path, data)

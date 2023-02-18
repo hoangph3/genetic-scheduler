@@ -7,18 +7,15 @@
 docker-compose up -d --build
 ```
 
-2. Access the UI:
-* [mongo express](http://localhost:8081) (you can view or edit the schedule database here)
-
 ## Use
 
-1. Generating schedules
+1. Generating schedules:
 
 ```sh
-curl -X POST http://localhost:8080/schedule/generate -H 'Content-Type: application/json' -d '{}'
+curl -X POST http://localhost:8080/schedule/generate -H 'Content-Type: application/json' -d @payload.json
 ```
 
-2. View schedules
+2. View schedules:
 ```
 [GET] http://localhost:8080/schedule/view
 ```
