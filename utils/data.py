@@ -49,6 +49,9 @@ class Data(object):
         subjects.append(Subject(name=subject['name'], n_lessons=subject['n_lessons'], instructor=instructors[subject['instructor']]))
       self.classrooms.append(Classroom(name=classroom['name'], subjects=subjects))
 
+    # for instructor_name, instructor in instructors.items():
+      # print(instructor, instructor.classroom, list(instructor.free_times.keys()))
+
 
   def get_meeting_times(self):
     return self.meeting_times

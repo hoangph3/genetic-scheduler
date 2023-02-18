@@ -16,7 +16,6 @@ NUMB_OF_ELITE_SCHEDULES = int(os.getenv("NUMB_OF_ELITE_SCHEDULES", "2"))
 TOURNAMENT_SELECTION_SIZE = int(os.getenv("TOURNAMENT_SELECTION_SIZE", "4"))
 CROSSOVER_RATE = float(os.getenv("CROSSOVER_RATE", "0.9"))
 MUTATION_RATE = float(os.getenv("MUTATION_RATE", "0.03"))
-VERBOSE = int(os.getenv("VERBOSE", "100"))
 
 
 class Schedule:
@@ -47,7 +46,10 @@ class Schedule:
                 newClass = Class(self._classNumb, subject, subject.n_lessons, classroom)
                 self._classNumb += 1
                 newClass.set_instructor(subject.instructor)
-                newClass.set_meeting_time(rnd.choice(list(subject.instructor.free_times.values())))
+                free_times = list(subject.instructor.free_times.values())
+                if not len(free_times):
+                    raise ValueError("Exceed the teaching hours of {}".format(subject.instructor))
+                newClass.set_meeting_time(rnd.choice(free_times))
                 self._classes.append(newClass)
 
         return self
@@ -234,11 +236,12 @@ def timetable(path=None, data=None):
                 last_lesson[str(lesson.instructor)].append(str(lesson.meeting_time))
 
             for subject in classroom.subjects:
+                if str(subject.instructor) not in last_lesson:
+                    continue
                 new_free_times = {}
-                if str(subject.instructor) in last_lesson:
-                    for k, v in data.get_free_times().items():
-                        if k not in last_lesson[str(subject.instructor)]:
-                            new_free_times[k] = v
+                for k, v in data.get_free_times().items():
+                    if k not in last_lesson[str(subject.instructor)]:
+                        new_free_times[k] = v
                 subject.instructor.free_times = new_free_times
 
         # generate schedule per classroom
@@ -252,7 +255,7 @@ def timetable(path=None, data=None):
             population = geneticAlgorithm.evolve(population)
             population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
             schedule = population.get_schedules()[0].get_classes()
-            logger.info('> Generation #{}, Number of conflicts #{}'.format(generation_num, population.get_schedules()[0]._numberOfConflicts))
+            logger.info('> Room #{}, Generation #{}, Number of conflicts #{}'.format(classroom, generation_num, population.get_schedules()[0]._numberOfConflicts))
 
         last_classroom = classroom
         # save valid schedule

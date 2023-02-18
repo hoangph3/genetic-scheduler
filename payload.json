@@ -52,5 +52,167 @@
             {"name": "The", "instructor": "Th01", "n_lessons": 2}
         ],
         "main_instructor": "Ho01"
+    },
+    {
+        "name": "7A",
+        "subject": [
+            {"name": "Toan", "instructor": "To01", "n_lessons": 4},
+            {"name": "Ly", "instructor": "Ly01", "n_lessons": 3},
+            {"name": "Hoa", "instructor": "Ho01", "n_lessons": 3},
+            {"name": "Van", "instructor": "Va01", "n_lessons": 4},
+            {"name": "Anh", "instructor": "An01", "n_lessons": 2},
+            {"name": "Sinh", "instructor": "Si01", "n_lessons": 2},
+            {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+            {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+            {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+            {"name": "Tin", "instructor": "Ti01", "n_lessons": 2},
+            {"name": "CN", "instructor": "To01", "n_lessons": 1},
+            {"name": "The", "instructor": "Th01", "n_lessons": 2}
+        ],
+        "main_instructor": "Va01"
+    },
+    {
+        "name": "7B",
+        "subject": [
+            {"name": "Toan", "instructor": "To02", "n_lessons": 4},
+            {"name": "Ly", "instructor": "Ly02", "n_lessons": 3},
+            {"name": "Hoa", "instructor": "Ho02", "n_lessons": 3},
+            {"name": "Van", "instructor": "Va02", "n_lessons": 4},
+            {"name": "Anh", "instructor": "An02", "n_lessons": 2},
+            {"name": "Sinh", "instructor": "Si02", "n_lessons": 2},
+            {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+            {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+            {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+            {"name": "Tin", "instructor": "Ti02", "n_lessons": 2},
+            {"name": "CN", "instructor": "To02", "n_lessons": 1},
+            {"name": "The", "instructor": "Th02", "n_lessons": 2}
+        ],
+        "main_instructor": "To02"
+    },
+    {
+        "name": "7C",
+        "subject": [
+            {"name": "Toan", "instructor": "To02", "n_lessons": 4},
+            {"name": "Ly", "instructor": "Ly02", "n_lessons": 3},
+            {"name": "Hoa", "instructor": "Ho02", "n_lessons": 3},
+            {"name": "Van", "instructor": "Va02", "n_lessons": 4},
+            {"name": "Anh", "instructor": "An02", "n_lessons": 2},
+            {"name": "Sinh", "instructor": "Si02", "n_lessons": 2},
+            {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+            {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+            {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+            {"name": "Tin", "instructor": "Ti02", "n_lessons": 2},
+            {"name": "CN", "instructor": "To02", "n_lessons": 1},
+            {"name": "The", "instructor": "Th02", "n_lessons": 2}
+        ],
+        "main_instructor": "Ly02"
+    },
+    {
+        "name": "8A",
+        "subject": [
+            {"name": "Toan", "instructor": "To02", "n_lessons": 4},
+            {"name": "Ly", "instructor": "Ly02", "n_lessons": 3},
+            {"name": "Hoa", "instructor": "Ho02", "n_lessons": 3},
+            {"name": "Van", "instructor": "Va02", "n_lessons": 4},
+            {"name": "Anh", "instructor": "An02", "n_lessons": 2},
+            {"name": "Sinh", "instructor": "Si02", "n_lessons": 2},
+            {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+            {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+            {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+            {"name": "Tin", "instructor": "Ti02", "n_lessons": 2},
+            {"name": "CN", "instructor": "To02", "n_lessons": 1},
+            {"name": "The", "instructor": "Th02", "n_lessons": 2}
+        ],
+        "main_instructor": "Ho02"
+    },
+    {
+        "name": "8B",
+        "subject": [
+            {"name": "Toan", "instructor": "To02", "n_lessons": 4},
+            {"name": "Ly", "instructor": "Ly02", "n_lessons": 3},
+            {"name": "Hoa", "instructor": "Ho02", "n_lessons": 3},
+            {"name": "Van", "instructor": "Va02", "n_lessons": 4},
+            {"name": "Anh", "instructor": "An02", "n_lessons": 2},
+            {"name": "Sinh", "instructor": "Si02", "n_lessons": 2},
+            {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+            {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+            {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+            {"name": "Tin", "instructor": "Ti02", "n_lessons": 2},
+            {"name": "CN", "instructor": "To02", "n_lessons": 1},
+            {"name": "The", "instructor": "Th02", "n_lessons": 2}
+        ],
+        "main_instructor": "Va02"
+    },
+    {
+        "name": "8C",
+        "subject": [
+            {"name": "Toan", "instructor": "To03", "n_lessons": 4},
+            {"name": "Ly", "instructor": "Ly03", "n_lessons": 3},
+            {"name": "Hoa", "instructor": "Ho03", "n_lessons": 3},
+            {"name": "Van", "instructor": "Va03", "n_lessons": 4},
+            {"name": "Anh", "instructor": "An03", "n_lessons": 2},
+            {"name": "Sinh", "instructor": "Si03", "n_lessons": 2},
+            {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+            {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+            {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+            {"name": "Tin", "instructor": "Ti03", "n_lessons": 2},
+            {"name": "CN", "instructor": "To03", "n_lessons": 1},
+            {"name": "The", "instructor": "Th03", "n_lessons": 2}
+        ],
+        "main_instructor": "To03"
+    },
+    {
+        "name": "9A",
+        "subject": [
+            {"name": "Toan", "instructor": "To03", "n_lessons": 4},
+            {"name": "Ly", "instructor": "Ly03", "n_lessons": 3},
+            {"name": "Hoa", "instructor": "Ho03", "n_lessons": 3},
+            {"name": "Van", "instructor": "Va03", "n_lessons": 4},
+            {"name": "Anh", "instructor": "An03", "n_lessons": 2},
+            {"name": "Sinh", "instructor": "Si03", "n_lessons": 2},
+            {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+            {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+            {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+            {"name": "Tin", "instructor": "Ti03", "n_lessons": 2},
+            {"name": "CN", "instructor": "To03", "n_lessons": 1},
+            {"name": "The", "instructor": "Th03", "n_lessons": 2}
+        ],
+        "main_instructor": "Ly03"
+    },
+    {
+        "name": "9B",
+        "subject": [
+            {"name": "Toan", "instructor": "To03", "n_lessons": 4},
+            {"name": "Ly", "instructor": "Ly03", "n_lessons": 3},
+            {"name": "Hoa", "instructor": "Ho03", "n_lessons": 3},
+            {"name": "Van", "instructor": "Va03", "n_lessons": 4},
+            {"name": "Anh", "instructor": "An03", "n_lessons": 2},
+            {"name": "Sinh", "instructor": "Si03", "n_lessons": 2},
+            {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+            {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+            {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+            {"name": "Tin", "instructor": "Ti03", "n_lessons": 2},
+            {"name": "CN", "instructor": "To03", "n_lessons": 1},
+            {"name": "The", "instructor": "Th03", "n_lessons": 2}
+        ],
+        "main_instructor": "Ho03"
+    },
+    {
+        "name": "9C",
+        "subject": [
+            {"name": "Toan", "instructor": "To03", "n_lessons": 4},
+            {"name": "Ly", "instructor": "Ly03", "n_lessons": 3},
+            {"name": "Hoa", "instructor": "Ho03", "n_lessons": 3},
+            {"name": "Van", "instructor": "Va03", "n_lessons": 4},
+            {"name": "Anh", "instructor": "An03", "n_lessons": 2},
+            {"name": "Sinh", "instructor": "Si03", "n_lessons": 2},
+            {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+            {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+            {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+            {"name": "Tin", "instructor": "Ti03", "n_lessons": 2},
+            {"name": "CN", "instructor": "To03", "n_lessons": 1},
+            {"name": "The", "instructor": "Th03", "n_lessons": 2}
+        ],
+        "main_instructor": "Va03"
     }
 ]
