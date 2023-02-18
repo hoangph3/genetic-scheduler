@@ -69,7 +69,7 @@
             {"name": "CN", "instructor": "To01", "n_lessons": 1},
             {"name": "The", "instructor": "Th01", "n_lessons": 2}
         ],
-        "main_instructor": "Va01"
+        "main_instructor": "An01"
     },
     {
         "name": "7B",
@@ -141,7 +141,7 @@
             {"name": "CN", "instructor": "To02", "n_lessons": 1},
             {"name": "The", "instructor": "Th02", "n_lessons": 2}
         ],
-        "main_instructor": "Va02"
+        "main_instructor": "An02"
     },
     {
         "name": "8C",
@@ -213,6 +213,6 @@
             {"name": "CN", "instructor": "To03", "n_lessons": 1},
             {"name": "The", "instructor": "Th03", "n_lessons": 2}
         ],
-        "main_instructor": "Va03"
+        "main_instructor": "An03"
     }
 ]

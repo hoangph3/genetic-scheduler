@@ -218,31 +218,33 @@ class Class:
 
 
 def timetable(path=None, data=None):
-    # load data
-    data = Data(data)
-
     # log
     if not os.path.exists(path):
         os.makedirs(path)
     logger.add(os.path.join(path, 'schedule.log'), rotation="500 MB")
 
-    # loop each classroom
+    # data loader
+    with open(os.path.join(path, "data.json"), "w") as f:
+        json.dump(data, f, indent=2)
+    data = Data(data)
+
+    # optimize each classroom
     last_classroom = None
+    last_lesson = defaultdict(list)
+
     for classroom in data.get_classrooms():
         # update free times for instructor
         if last_classroom is not None:
-            last_lesson = defaultdict(list)
             for lesson in schedule:
                 last_lesson[str(lesson.instructor)].append(str(lesson.meeting_time))
 
             for subject in classroom.subjects:
-                if str(subject.instructor) not in last_lesson:
-                    continue
-                new_free_times = {}
-                for k, v in data.get_free_times().items():
-                    if k not in last_lesson[str(subject.instructor)]:
-                        new_free_times[k] = v
-                subject.instructor.free_times = new_free_times
+                if str(subject.instructor) in last_lesson:
+                    new_free_times = {}
+                    for k, v in data.get_free_times().items():
+                        if k not in last_lesson[str(subject.instructor)]:
+                            new_free_times[k] = v
+                    subject.instructor.free_times = new_free_times
 
         # generate schedule per classroom
         schedule = []

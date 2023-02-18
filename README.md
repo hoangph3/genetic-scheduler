@@ -12,7 +12,7 @@ docker-compose up -d --build
 1. Generating schedules:
 
 ```sh
-curl -X POST http://localhost:8080/schedule/generate -H 'Content-Type: application/json' -d @payload.json
+curl -X POST http://localhost:8080/schedule/generate -H 'Content-Type: application/json' -d @data.json
 ```
 
 2. View schedules:
