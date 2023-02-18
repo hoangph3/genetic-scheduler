@@ -1,0 +1,6 @@
+,Room,2,3,4,5,6,7
+1,6C,,CN_To01,Anh_An01,Ly_Ly01,Toan_To01,Hoa_Ho01
+2,6C,Toan_To01,GDCD_GD01,Toan_To01,Hoa_Ho01,Toan_To01,Anh_An01
+3,6C,Hoa_Ho01,Ly_Ly01,Van_Va01,Su_Su01,Van_Va01,Ly_Ly01
+4,6C,Van_Va01,Tin_Ti01,Van_Va01,The_Th01,Sinh_Si01,Tin_Ti01
+5,6C,Sinh_Si01,The_Th01,,,Dia_Di01,
