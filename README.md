@@ -9,13 +9,7 @@ docker-compose up -d --build
 
 ## Use
 
-1. Generating schedules:
-
-```sh
-curl -X POST http://localhost:8080/schedule/generate -H 'Content-Type: application/json' -d @data.json
+1. Access to swagger:
 ```
-
-2. View schedules:
-```
-[GET] http://localhost:8080/schedule/view
+http://localhost:8080/docs
 ```
