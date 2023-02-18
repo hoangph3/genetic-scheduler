@@ -11,10 +11,10 @@ import os
 from utils.data import Data
 
 
-POPULATION_SIZE = int(os.getenv("POPULATION_SIZE", "300"))
-NUMB_OF_ELITE_SCHEDULES = int(os.getenv("NUMB_OF_ELITE_SCHEDULES", "2"))
-TOURNAMENT_SELECTION_SIZE = int(os.getenv("TOURNAMENT_SELECTION_SIZE", "4"))
-CROSSOVER_RATE = float(os.getenv("CROSSOVER_RATE", "0.9"))
+POPULATION_SIZE = int(os.getenv("POPULATION_SIZE", "100"))
+NUMB_OF_ELITE_SCHEDULES = int(os.getenv("NUMB_OF_ELITE_SCHEDULES", "1"))
+TOURNAMENT_SELECTION_SIZE = int(os.getenv("TOURNAMENT_SELECTION_SIZE", "3"))
+CROSSOVER_RATE = float(os.getenv("CROSSOVER_RATE", "0.90"))
 MUTATION_RATE = float(os.getenv("MUTATION_RATE", "0.03"))
 
 
@@ -48,7 +48,7 @@ class Schedule:
                 newClass.set_instructor(subject.instructor)
                 free_times = list(subject.instructor.free_times.values())
                 if not len(free_times):
-                    raise ValueError("Exceed the teaching hours of {}".format(subject.instructor))
+                    logger.info("Exceed the teaching hours of {}".format(subject.instructor))
                 newClass.set_meeting_time(rnd.choice(free_times))
                 self._classes.append(newClass)
 
@@ -221,10 +221,10 @@ def timetable(path=None, data=None):
     # log
     if not os.path.exists(path):
         os.makedirs(path)
-    logger.add(os.path.join(path, 'schedule.log'), rotation="500 MB")
+    logger.add(os.path.join(path, 'schedule.log'), rotation="50 MB")
 
     # data loader
-    with open(os.path.join(path, "data.json"), "w") as f:
+    with open(os.path.join(path, "data.txt"), "w") as f:
         json.dump(data, f, indent=2)
     data = Data(data)
 
@@ -258,6 +258,8 @@ def timetable(path=None, data=None):
             population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
             schedule = population.get_schedules()[0].get_classes()
             logger.info('> Room #{}, Generation #{}, Number of conflicts #{}'.format(classroom, generation_num, population.get_schedules()[0]._numberOfConflicts))
+            if generation_num > 10000:
+                break
 
         last_classroom = classroom
         # save valid schedule
@@ -273,20 +275,18 @@ def timetable(path=None, data=None):
                 }
             )
         df = pd.DataFrame(df)
-        dfs = []
         df = df.sort_values(by=["day", "lesson"], inplace=False).to_dict("records")
         new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=['Room', '2', '3', '4', '5', '6', '7'])
         for d in df:
             new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
+        new_df.loc[1, '2'] = "Chao Co"
+        new_df.loc[5, '7'] = "Sinh Hoat Lop"
         new_df['Room'] = str(classroom)
-        dfs.append(new_df)
-        dfs = pd.concat(dfs)
-        dfs = dfs.fillna("")
+        new_df = new_df.fillna("", inplace=False)
 
-        logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(classroom, population.get_schedules()[0]._numberOfConflicts, dfs.to_string()))
-        dfs.to_csv(os.path.join(path, "schedule_{}.csv".format(classroom)))
-        with open(os.path.join(path, "schedule_{}.json".format(classroom)), "w") as f:
-            json.dump(dfs.to_dict('records'), f, indent=2)
+        logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(classroom, population.get_schedules()[0]._numberOfConflicts, new_df.to_string()))
+        with open(os.path.join(path, "{}_{}.json".format(classroom, population.get_schedules()[0]._numberOfConflicts)), "w") as f:
+            json.dump(new_df.to_dict('records'), f, indent=2)
 
     # kill thread
     sys.exit()
