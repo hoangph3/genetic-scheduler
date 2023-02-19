@@ -7,15 +7,17 @@ import json
 import math
 import sys
 import os
+import time
 
 from utils.data import Data
 
 
-POPULATION_SIZE = int(os.getenv("POPULATION_SIZE", "100"))
-NUMB_OF_ELITE_SCHEDULES = int(os.getenv("NUMB_OF_ELITE_SCHEDULES", "1"))
-TOURNAMENT_SELECTION_SIZE = int(os.getenv("TOURNAMENT_SELECTION_SIZE", "3"))
+POPULATION_SIZE = int(os.getenv("POPULATION_SIZE", "300"))
+NUMB_OF_ELITE_SCHEDULES = int(os.getenv("NUMB_OF_ELITE_SCHEDULES", "2"))
+TOURNAMENT_SELECTION_SIZE = int(os.getenv("TOURNAMENT_SELECTION_SIZE", "4"))
 CROSSOVER_RATE = float(os.getenv("CROSSOVER_RATE", "0.90"))
 MUTATION_RATE = float(os.getenv("MUTATION_RATE", "0.03"))
+TIMEOUT = int(os.getenv("TIMEOUT", "300"))
 
 
 class Schedule:
@@ -252,13 +254,14 @@ def timetable(path=None, data=None):
         generation_num = 0
         population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
         geneticAlgorithm = GeneticAlgorithm(classroom)
+        start_time = time.time()
         while population.get_schedules()[0].get_fitness() != 1.0:
             generation_num += 1
             population = geneticAlgorithm.evolve(population)
             population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
             schedule = population.get_schedules()[0].get_classes()
             logger.info('> Room #{}, Generation #{}, Number of conflicts #{}'.format(classroom, generation_num, population.get_schedules()[0]._numberOfConflicts))
-            if generation_num > 10000:
+            if time.time() - start_time > TIMEOUT:
                 break
 
         last_classroom = classroom

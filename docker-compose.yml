@@ -7,11 +7,12 @@ services:
     container_name: genetic_scheduler
     image: hoangph3/genetic-scheduler:1.0.0
     environment:
-      - POPULATION_SIZE=100
-      - NUMB_OF_ELITE_SCHEDULES=1
-      - TOURNAMENT_SELECTION_SIZE=3
+      - POPULATION_SIZE=300
+      - NUMB_OF_ELITE_SCHEDULES=2
+      - TOURNAMENT_SELECTION_SIZE=4
       - CROSSOVER_RATE=0.90
       - MUTATION_RATE=0.03
+      - TIMEOUT=300
     ports:
       - "8080:8080"
     volumes:

@@ -74,6 +74,60 @@ class DataModel(BaseModel):
                 {"name": "The", "instructor": "Th01", "n_lessons": 2}
             ],
             "main_instructor": "Ho01"
+        },
+        {
+            "name": "7A",
+            "subject": [
+                {"name": "Toan", "instructor": "To01", "n_lessons": 4},
+                {"name": "Ly", "instructor": "Ly01", "n_lessons": 3},
+                {"name": "Hoa", "instructor": "Ho01", "n_lessons": 3},
+                {"name": "Van", "instructor": "Va01", "n_lessons": 4},
+                {"name": "Anh", "instructor": "An01", "n_lessons": 2},
+                {"name": "Sinh", "instructor": "Si01", "n_lessons": 2},
+                {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+                {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+                {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+                {"name": "Tin", "instructor": "Ti01", "n_lessons": 2},
+                {"name": "CN", "instructor": "To01", "n_lessons": 1},
+                {"name": "The", "instructor": "Th01", "n_lessons": 2}
+            ],
+            "main_instructor": "An01"
+        },
+        {
+            "name": "7B",
+            "subject": [
+                {"name": "Toan", "instructor": "To02", "n_lessons": 4},
+                {"name": "Ly", "instructor": "Ly02", "n_lessons": 3},
+                {"name": "Hoa", "instructor": "Ho02", "n_lessons": 3},
+                {"name": "Van", "instructor": "Va02", "n_lessons": 4},
+                {"name": "Anh", "instructor": "An02", "n_lessons": 2},
+                {"name": "Sinh", "instructor": "Si02", "n_lessons": 2},
+                {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+                {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+                {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+                {"name": "Tin", "instructor": "Ti02", "n_lessons": 2},
+                {"name": "CN", "instructor": "To02", "n_lessons": 1},
+                {"name": "The", "instructor": "Th02", "n_lessons": 2}
+            ],
+            "main_instructor": "To02"
+        },
+        {
+            "name": "7C",
+            "subject": [
+                {"name": "Toan", "instructor": "To02", "n_lessons": 4},
+                {"name": "Ly", "instructor": "Ly02", "n_lessons": 3},
+                {"name": "Hoa", "instructor": "Ho02", "n_lessons": 3},
+                {"name": "Van", "instructor": "Va02", "n_lessons": 4},
+                {"name": "Anh", "instructor": "An02", "n_lessons": 2},
+                {"name": "Sinh", "instructor": "Si02", "n_lessons": 2},
+                {"name": "Su", "instructor": "Su01", "n_lessons": 1},
+                {"name": "Dia", "instructor": "Di01", "n_lessons": 1},
+                {"name": "GDCD", "instructor": "GD01", "n_lessons": 1},
+                {"name": "Tin", "instructor": "Ti02", "n_lessons": 2},
+                {"name": "CN", "instructor": "To02", "n_lessons": 1},
+                {"name": "The", "instructor": "Th02", "n_lessons": 2}
+            ],
+            "main_instructor": "Ly02"
         }
     ]
 
@@ -81,6 +135,7 @@ class DataModel(BaseModel):
 def run_app(api_host='0.0.0.0', api_port=8080, debug=True):
     app = FastAPI(docs_url=None, redoc_url=None, debug=debug)
     app.mount("/static", StaticFiles(directory="static"), name="static")
+    logs_dir = "./logs"
 
 
     @app.get("/docs", include_in_schema=False)
@@ -109,9 +164,9 @@ def run_app(api_host='0.0.0.0', api_port=8080, debug=True):
 
 
     @app.post("/schedule/generate")
-    async def generate(data: DataModel):
-        schedule_id = str(int(time.time()))
-        path = os.path.join("logs", schedule_id)
+    async def generate_schedule(data: DataModel):
+        schedule_id = int(time.time())
+        path = os.path.join(logs_dir, str(schedule_id))
 
         Thread(target=timetable, args=(path, data.classrooms)).start()
 
@@ -122,10 +177,39 @@ def run_app(api_host='0.0.0.0', api_port=8080, debug=True):
         return JSONResponse(content=content, status_code=200)
 
 
+    @app.get("/schedule/lists")
+    async def lists_schedule():
+        return JSONResponse(
+            content={"schedule_id": os.listdir(logs_dir)}, status_code=200
+        )
+
+
+    @app.delete("/schedule/view/{schedule_id}")
+    async def delete_schedule(schedule_id: int):
+        if not os.path.exists(os.path.join(logs_dir, str(schedule_id))):
+            content = {
+                "message": "Invalid schedule id",
+                "schedule_id": schedule_id
+            }
+        else:
+            os.system("rm -rf {}".format(os.path.join(logs_dir, str(schedule_id))))
+            content = {
+                "message": "Schedule has been deleted",
+                "schedule_id": schedule_id
+            }
+        return JSONResponse(content=content, status_code=200)
+        
+
     @app.get("/schedule/view/{schedule_id}")
-    async def view(schedule_id: int):
+    async def view_schedule(schedule_id: int):
+        if not os.path.exists(os.path.join(logs_dir, str(schedule_id))):
+            content = {
+                "message": "Invalid schedule id",
+                "schedule_id": schedule_id
+            }
+            return JSONResponse(content=content, status_code=200)
         result = {}
-        for schedule_file in sorted(Path(f"./logs/{schedule_id}").glob('*.json')):
+        for schedule_file in sorted(Path(os.path.join(logs_dir, str(schedule_id))).glob('*.json')):
             # load schedule
             with open(schedule_file) as f:
                 schedule = json.load(f)
