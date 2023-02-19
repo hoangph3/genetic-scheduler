@@ -1,0 +1,47 @@
+[
+  {
+    "Room": "7B",
+    "2": "Chao Co",
+    "3": "Ly_Ly02",
+    "4": "Hoa_Ho02",
+    "5": "Su_Su01",
+    "6": "CN_To02",
+    "7": "Sinh_Si02"
+  },
+  {
+    "Room": "7B",
+    "2": "Anh_An02",
+    "3": "Tin_Ti02",
+    "4": "Toan_To02",
+    "5": "Ly_Ly02",
+    "6": "The_Th02",
+    "7": "Toan_To02"
+  },
+  {
+    "Room": "7B",
+    "2": "Toan_To02",
+    "3": "GDCD_GD01",
+    "4": "Toan_To02",
+    "5": "Tin_Ti02",
+    "6": "Dia_Di01",
+    "7": "Ly_Ly02"
+  },
+  {
+    "Room": "7B",
+    "2": "Van_Va02",
+    "3": "Sinh_Si02",
+    "4": "Van_Va02",
+    "5": "Anh_An02",
+    "6": "Van_Va02",
+    "7": "Hoa_Ho02"
+  },
+  {
+    "Room": "7B",
+    "2": "Hoa_Ho02",
+    "3": "The_Th02",
+    "4": "Van_Va02",
+    "5": "",
+    "6": "",
+    "7": "Sinh Hoat Lop"
+  }
+]

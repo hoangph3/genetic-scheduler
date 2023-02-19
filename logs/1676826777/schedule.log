@@ -1,0 +1,330 @@
+2023-02-19 17:12:58.464 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #1, Number of conflicts #11
+2023-02-19 17:12:58.850 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #2, Number of conflicts #11
+2023-02-19 17:12:59.265 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #3, Number of conflicts #11
+2023-02-19 17:12:59.715 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #4, Number of conflicts #11
+2023-02-19 17:13:00.117 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #5, Number of conflicts #11
+2023-02-19 17:13:00.524 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #6, Number of conflicts #11
+2023-02-19 17:13:00.934 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #7, Number of conflicts #11
+2023-02-19 17:13:01.337 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #8, Number of conflicts #11
+2023-02-19 17:13:01.716 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #9, Number of conflicts #11
+2023-02-19 17:13:02.181 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #10, Number of conflicts #11
+2023-02-19 17:13:02.564 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #11, Number of conflicts #11
+2023-02-19 17:13:02.976 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #12, Number of conflicts #10
+2023-02-19 17:13:03.354 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #13, Number of conflicts #6
+2023-02-19 17:13:03.743 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #14, Number of conflicts #6
+2023-02-19 17:13:04.123 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #15, Number of conflicts #6
+2023-02-19 17:13:04.613 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #16, Number of conflicts #6
+2023-02-19 17:13:05.012 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #17, Number of conflicts #6
+2023-02-19 17:13:05.414 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #18, Number of conflicts #6
+2023-02-19 17:13:05.803 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #19, Number of conflicts #6
+2023-02-19 17:13:06.182 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #20, Number of conflicts #6
+2023-02-19 17:13:06.631 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #21, Number of conflicts #6
+2023-02-19 17:13:07.030 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #22, Number of conflicts #6
+2023-02-19 17:13:07.446 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #23, Number of conflicts #6
+2023-02-19 17:13:07.896 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #24, Number of conflicts #5
+2023-02-19 17:13:08.269 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #25, Number of conflicts #5
+2023-02-19 17:13:08.642 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #26, Number of conflicts #5
+2023-02-19 17:13:09.075 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #27, Number of conflicts #5
+2023-02-19 17:13:09.443 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #28, Number of conflicts #3
+2023-02-19 17:13:09.815 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #29, Number of conflicts #3
+2023-02-19 17:13:10.188 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #30, Number of conflicts #3
+2023-02-19 17:13:10.616 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #31, Number of conflicts #2
+2023-02-19 17:13:10.991 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #32, Number of conflicts #2
+2023-02-19 17:13:11.365 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #33, Number of conflicts #2
+2023-02-19 17:13:11.769 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #34, Number of conflicts #1
+2023-02-19 17:13:12.168 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #35, Number of conflicts #1
+2023-02-19 17:13:12.540 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #36, Number of conflicts #1
+2023-02-19 17:13:12.910 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #37, Number of conflicts #1
+2023-02-19 17:13:13.283 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #38, Number of conflicts #1
+2023-02-19 17:13:13.715 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #39, Number of conflicts #1
+2023-02-19 17:13:14.093 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #40, Number of conflicts #1
+2023-02-19 17:13:14.462 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #41, Number of conflicts #1
+2023-02-19 17:13:14.863 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #42, Number of conflicts #1
+2023-02-19 17:13:15.266 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #43, Number of conflicts #1
+2023-02-19 17:13:15.640 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #44, Number of conflicts #1
+2023-02-19 17:13:16.014 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #45, Number of conflicts #1
+2023-02-19 17:13:16.392 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #46, Number of conflicts #1
+2023-02-19 17:13:16.835 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #47, Number of conflicts #1
+2023-02-19 17:13:17.231 | INFO     | core.scheduler:timetable:263 - > Room #6A, Generation #48, Number of conflicts #0
+2023-02-19 17:13:17.256 | INFO     | core.scheduler:timetable:290 - > Schedule #6A, Number of conflicts #0 
+   Room          2         3          4          5         6              7
+1   6A    Chao Co   Su_Su01   The_Th01   Dia_Di01  The_Th01      Sinh_Si01
+2   6A   Van_Va01  Hoa_Ho01  Toan_To01   Van_Va01  Tin_Ti01      Toan_To01
+3   6A   Van_Va01  Anh_An01  Toan_To01   Hoa_Ho01   Ly_Ly01       Hoa_Ho01
+4   6A  Toan_To01   Ly_Ly01  GDCD_GD01  Sinh_Si01  Anh_An01       Van_Va01
+5   6A   Tin_Ti01   Ly_Ly01                         CN_To01  Sinh Hoat Lop
+2023-02-19 17:13:17.799 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #1, Number of conflicts #14
+2023-02-19 17:13:18.169 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #2, Number of conflicts #14
+2023-02-19 17:13:18.575 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #3, Number of conflicts #13
+2023-02-19 17:13:18.982 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #4, Number of conflicts #11
+2023-02-19 17:13:19.365 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #5, Number of conflicts #11
+2023-02-19 17:13:19.726 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #6, Number of conflicts #10
+2023-02-19 17:13:20.104 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #7, Number of conflicts #10
+2023-02-19 17:13:20.514 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #8, Number of conflicts #10
+2023-02-19 17:13:20.926 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #9, Number of conflicts #10
+2023-02-19 17:13:21.301 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #10, Number of conflicts #10
+2023-02-19 17:13:21.680 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #11, Number of conflicts #9
+2023-02-19 17:13:22.045 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #12, Number of conflicts #9
+2023-02-19 17:13:22.502 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #13, Number of conflicts #9
+2023-02-19 17:13:22.871 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #14, Number of conflicts #9
+2023-02-19 17:13:23.240 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #15, Number of conflicts #9
+2023-02-19 17:13:23.622 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #16, Number of conflicts #9
+2023-02-19 17:13:24.031 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #17, Number of conflicts #9
+2023-02-19 17:13:24.434 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #18, Number of conflicts #5
+2023-02-19 17:13:24.812 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #19, Number of conflicts #5
+2023-02-19 17:13:25.175 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #20, Number of conflicts #5
+2023-02-19 17:13:25.556 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #21, Number of conflicts #5
+2023-02-19 17:13:25.920 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #22, Number of conflicts #5
+2023-02-19 17:13:26.301 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #23, Number of conflicts #5
+2023-02-19 17:13:26.675 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #24, Number of conflicts #5
+2023-02-19 17:13:27.051 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #25, Number of conflicts #5
+2023-02-19 17:13:27.424 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #26, Number of conflicts #5
+2023-02-19 17:13:27.796 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #27, Number of conflicts #3
+2023-02-19 17:13:28.163 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #28, Number of conflicts #3
+2023-02-19 17:13:28.600 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #29, Number of conflicts #3
+2023-02-19 17:13:29.018 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #30, Number of conflicts #3
+2023-02-19 17:13:29.421 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #31, Number of conflicts #3
+2023-02-19 17:13:29.867 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #32, Number of conflicts #1
+2023-02-19 17:13:30.225 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #33, Number of conflicts #1
+2023-02-19 17:13:30.606 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #34, Number of conflicts #1
+2023-02-19 17:13:30.970 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #35, Number of conflicts #1
+2023-02-19 17:13:31.352 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #36, Number of conflicts #1
+2023-02-19 17:13:31.847 | INFO     | core.scheduler:timetable:263 - > Room #6B, Generation #37, Number of conflicts #0
+2023-02-19 17:13:31.875 | INFO     | core.scheduler:timetable:290 - > Schedule #6B, Number of conflicts #0 
+   Room         2         3          4          5          6              7
+1   6B   Chao Co  The_Th01  Sinh_Si01  Toan_To01   Hoa_Ho01        Ly_Ly01
+2   6B  Dia_Di01  Anh_An01  GDCD_GD01  Toan_To01   Anh_An01       The_Th01
+3   6B  Hoa_Ho01   CN_To01   Van_Va01    Su_Su01  Sinh_Si01      Toan_To01
+4   6B   Ly_Ly01  Tin_Ti01   Van_Va01    Ly_Ly01   Van_Va01      Toan_To01
+5   6B  Van_Va01             Hoa_Ho01              Tin_Ti01  Sinh Hoat Lop
+2023-02-19 17:13:32.405 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #1, Number of conflicts #15
+2023-02-19 17:13:32.791 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #2, Number of conflicts #13
+2023-02-19 17:13:33.185 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #3, Number of conflicts #13
+2023-02-19 17:13:33.557 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #4, Number of conflicts #13
+2023-02-19 17:13:33.947 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #5, Number of conflicts #13
+2023-02-19 17:13:34.400 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #6, Number of conflicts #13
+2023-02-19 17:13:34.771 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #7, Number of conflicts #13
+2023-02-19 17:13:35.153 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #8, Number of conflicts #11
+2023-02-19 17:13:35.534 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #9, Number of conflicts #10
+2023-02-19 17:13:35.964 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #10, Number of conflicts #10
+2023-02-19 17:13:36.348 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #11, Number of conflicts #10
+2023-02-19 17:13:36.721 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #12, Number of conflicts #10
+2023-02-19 17:13:37.097 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #13, Number of conflicts #9
+2023-02-19 17:13:37.473 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #14, Number of conflicts #9
+2023-02-19 17:13:37.844 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #15, Number of conflicts #9
+2023-02-19 17:13:38.213 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #16, Number of conflicts #9
+2023-02-19 17:13:38.576 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #17, Number of conflicts #9
+2023-02-19 17:13:38.972 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #18, Number of conflicts #8
+2023-02-19 17:13:39.402 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #19, Number of conflicts #8
+2023-02-19 17:13:39.796 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #20, Number of conflicts #8
+2023-02-19 17:13:40.207 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #21, Number of conflicts #7
+2023-02-19 17:13:40.613 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #22, Number of conflicts #7
+2023-02-19 17:13:41.006 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #23, Number of conflicts #7
+2023-02-19 17:13:41.392 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #24, Number of conflicts #7
+2023-02-19 17:13:41.767 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #25, Number of conflicts #6
+2023-02-19 17:13:42.158 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #26, Number of conflicts #6
+2023-02-19 17:13:42.594 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #27, Number of conflicts #6
+2023-02-19 17:13:42.960 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #28, Number of conflicts #5
+2023-02-19 17:13:43.338 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #29, Number of conflicts #3
+2023-02-19 17:13:43.707 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #30, Number of conflicts #3
+2023-02-19 17:13:44.093 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #31, Number of conflicts #2
+2023-02-19 17:13:44.481 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #32, Number of conflicts #2
+2023-02-19 17:13:44.856 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #33, Number of conflicts #2
+2023-02-19 17:13:45.228 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #34, Number of conflicts #2
+2023-02-19 17:13:45.610 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #35, Number of conflicts #2
+2023-02-19 17:13:45.977 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #36, Number of conflicts #2
+2023-02-19 17:13:46.343 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #37, Number of conflicts #2
+2023-02-19 17:13:46.705 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #38, Number of conflicts #2
+2023-02-19 17:13:47.081 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #39, Number of conflicts #2
+2023-02-19 17:13:47.440 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #40, Number of conflicts #1
+2023-02-19 17:13:47.807 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #41, Number of conflicts #1
+2023-02-19 17:13:48.166 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #42, Number of conflicts #1
+2023-02-19 17:13:48.533 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #43, Number of conflicts #1
+2023-02-19 17:13:48.898 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #44, Number of conflicts #1
+2023-02-19 17:13:49.265 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #45, Number of conflicts #1
+2023-02-19 17:13:49.635 | INFO     | core.scheduler:timetable:263 - > Room #6C, Generation #46, Number of conflicts #0
+2023-02-19 17:13:49.660 | INFO     | core.scheduler:timetable:290 - > Schedule #6C, Number of conflicts #0 
+   Room          2          3          4         5          6              7
+1   6C    Chao Co  Sinh_Si01  Toan_To01  Hoa_Ho01  Sinh_Si01       Van_Va01
+2   6C    CN_To01   Van_Va01   Anh_An01  The_Th01  Toan_To01       Hoa_Ho01
+3   6C  Toan_To01   Van_Va01    Ly_Ly01  Van_Va01  Toan_To01       Anh_An01
+4   6C   Hoa_Ho01   Dia_Di01   Tin_Ti01   Su_Su01   Tin_Ti01       The_Th01
+5   6C    Ly_Ly01             GDCD_GD01              Ly_Ly01  Sinh Hoat Lop
+2023-02-19 17:13:50.204 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #1, Number of conflicts #11
+2023-02-19 17:13:50.564 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #2, Number of conflicts #11
+2023-02-19 17:13:50.936 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #3, Number of conflicts #11
+2023-02-19 17:13:51.294 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #4, Number of conflicts #11
+2023-02-19 17:13:51.671 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #5, Number of conflicts #11
+2023-02-19 17:13:52.036 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #6, Number of conflicts #11
+2023-02-19 17:13:52.423 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #7, Number of conflicts #11
+2023-02-19 17:13:52.793 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #8, Number of conflicts #11
+2023-02-19 17:13:53.166 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #9, Number of conflicts #11
+2023-02-19 17:13:53.522 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #10, Number of conflicts #11
+2023-02-19 17:13:53.893 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #11, Number of conflicts #11
+2023-02-19 17:13:54.253 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #12, Number of conflicts #11
+2023-02-19 17:13:54.633 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #13, Number of conflicts #11
+2023-02-19 17:13:55.035 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #14, Number of conflicts #11
+2023-02-19 17:13:55.420 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #15, Number of conflicts #11
+2023-02-19 17:13:55.788 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #16, Number of conflicts #9
+2023-02-19 17:13:56.162 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #17, Number of conflicts #9
+2023-02-19 17:13:56.534 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #18, Number of conflicts #9
+2023-02-19 17:13:56.907 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #19, Number of conflicts #9
+2023-02-19 17:13:57.279 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #20, Number of conflicts #7
+2023-02-19 17:13:57.650 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #21, Number of conflicts #7
+2023-02-19 17:13:58.023 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #22, Number of conflicts #7
+2023-02-19 17:13:58.391 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #23, Number of conflicts #7
+2023-02-19 17:13:58.753 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #24, Number of conflicts #7
+2023-02-19 17:13:59.133 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #25, Number of conflicts #7
+2023-02-19 17:13:59.491 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #26, Number of conflicts #7
+2023-02-19 17:13:59.863 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #27, Number of conflicts #7
+2023-02-19 17:14:00.224 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #28, Number of conflicts #7
+2023-02-19 17:14:00.602 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #29, Number of conflicts #7
+2023-02-19 17:14:00.969 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #30, Number of conflicts #5
+2023-02-19 17:14:01.348 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #31, Number of conflicts #5
+2023-02-19 17:14:01.710 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #32, Number of conflicts #5
+2023-02-19 17:14:02.071 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #33, Number of conflicts #5
+2023-02-19 17:14:02.433 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #34, Number of conflicts #4
+2023-02-19 17:14:02.815 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #35, Number of conflicts #3
+2023-02-19 17:14:03.181 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #36, Number of conflicts #3
+2023-02-19 17:14:03.550 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #37, Number of conflicts #3
+2023-02-19 17:14:03.910 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #38, Number of conflicts #3
+2023-02-19 17:14:04.285 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #39, Number of conflicts #2
+2023-02-19 17:14:04.643 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #40, Number of conflicts #2
+2023-02-19 17:14:05.014 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #41, Number of conflicts #2
+2023-02-19 17:14:05.376 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #42, Number of conflicts #2
+2023-02-19 17:14:05.745 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #43, Number of conflicts #2
+2023-02-19 17:14:06.103 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #44, Number of conflicts #1
+2023-02-19 17:14:06.467 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #45, Number of conflicts #1
+2023-02-19 17:14:06.830 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #46, Number of conflicts #1
+2023-02-19 17:14:07.197 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #47, Number of conflicts #1
+2023-02-19 17:14:07.574 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #48, Number of conflicts #1
+2023-02-19 17:14:07.934 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #49, Number of conflicts #1
+2023-02-19 17:14:08.304 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #50, Number of conflicts #1
+2023-02-19 17:14:08.766 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #51, Number of conflicts #1
+2023-02-19 17:14:09.150 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #52, Number of conflicts #1
+2023-02-19 17:14:09.598 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #53, Number of conflicts #1
+2023-02-19 17:14:09.969 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #54, Number of conflicts #1
+2023-02-19 17:14:10.352 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #55, Number of conflicts #1
+2023-02-19 17:14:10.778 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #56, Number of conflicts #1
+2023-02-19 17:14:11.155 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #57, Number of conflicts #1
+2023-02-19 17:14:11.540 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #58, Number of conflicts #1
+2023-02-19 17:14:11.918 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #59, Number of conflicts #1
+2023-02-19 17:14:12.291 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #60, Number of conflicts #1
+2023-02-19 17:14:12.677 | INFO     | core.scheduler:timetable:263 - > Room #7A, Generation #61, Number of conflicts #0
+2023-02-19 17:14:12.702 | INFO     | core.scheduler:timetable:290 - > Schedule #7A, Number of conflicts #0 
+   Room         2          3          4          5          6              7
+1   7A   Chao Co    CN_To01    Ly_Ly01   Tin_Ti01   Van_Va01      Toan_To01
+2   7A  Hoa_Ho01  Toan_To01  Sinh_Si01  GDCD_GD01   Van_Va01       Anh_An01
+3   7A   Ly_Ly01    Su_Su01   Hoa_Ho01  Toan_To01   Hoa_Ho01       The_Th01
+4   7A  Tin_Ti01   Van_Va01   The_Th01  Toan_To01   Dia_Di01        Ly_Ly01
+5   7A  Anh_An01   Van_Va01                        Sinh_Si01  Sinh Hoat Lop
+2023-02-19 17:14:13.243 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #1, Number of conflicts #11
+2023-02-19 17:14:13.661 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #2, Number of conflicts #11
+2023-02-19 17:14:14.058 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #3, Number of conflicts #11
+2023-02-19 17:14:14.439 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #4, Number of conflicts #11
+2023-02-19 17:14:14.822 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #5, Number of conflicts #11
+2023-02-19 17:14:15.191 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #6, Number of conflicts #11
+2023-02-19 17:14:15.568 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #7, Number of conflicts #10
+2023-02-19 17:14:15.935 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #8, Number of conflicts #10
+2023-02-19 17:14:16.306 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #9, Number of conflicts #10
+2023-02-19 17:14:16.677 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #10, Number of conflicts #10
+2023-02-19 17:14:17.060 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #11, Number of conflicts #10
+2023-02-19 17:14:17.426 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #12, Number of conflicts #10
+2023-02-19 17:14:17.794 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #13, Number of conflicts #10
+2023-02-19 17:14:18.160 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #14, Number of conflicts #10
+2023-02-19 17:14:18.543 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #15, Number of conflicts #7
+2023-02-19 17:14:18.901 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #16, Number of conflicts #7
+2023-02-19 17:14:19.275 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #17, Number of conflicts #7
+2023-02-19 17:14:19.650 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #18, Number of conflicts #7
+2023-02-19 17:14:20.028 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #19, Number of conflicts #7
+2023-02-19 17:14:20.407 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #20, Number of conflicts #6
+2023-02-19 17:14:20.780 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #21, Number of conflicts #6
+2023-02-19 17:14:21.145 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #22, Number of conflicts #6
+2023-02-19 17:14:21.518 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #23, Number of conflicts #5
+2023-02-19 17:14:21.881 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #24, Number of conflicts #5
+2023-02-19 17:14:22.242 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #25, Number of conflicts #5
+2023-02-19 17:14:22.606 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #26, Number of conflicts #5
+2023-02-19 17:14:22.966 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #27, Number of conflicts #4
+2023-02-19 17:14:23.383 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #28, Number of conflicts #4
+2023-02-19 17:14:23.750 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #29, Number of conflicts #4
+2023-02-19 17:14:24.116 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #30, Number of conflicts #4
+2023-02-19 17:14:24.482 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #31, Number of conflicts #3
+2023-02-19 17:14:24.853 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #32, Number of conflicts #2
+2023-02-19 17:14:25.222 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #33, Number of conflicts #2
+2023-02-19 17:14:25.621 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #34, Number of conflicts #2
+2023-02-19 17:14:25.981 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #35, Number of conflicts #2
+2023-02-19 17:14:26.386 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #36, Number of conflicts #2
+2023-02-19 17:14:26.752 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #37, Number of conflicts #2
+2023-02-19 17:14:27.116 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #38, Number of conflicts #2
+2023-02-19 17:14:27.495 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #39, Number of conflicts #2
+2023-02-19 17:14:27.864 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #40, Number of conflicts #2
+2023-02-19 17:14:28.220 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #41, Number of conflicts #1
+2023-02-19 17:14:28.589 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #42, Number of conflicts #1
+2023-02-19 17:14:28.948 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #43, Number of conflicts #1
+2023-02-19 17:14:29.324 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #44, Number of conflicts #1
+2023-02-19 17:14:29.689 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #45, Number of conflicts #1
+2023-02-19 17:14:30.046 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #46, Number of conflicts #1
+2023-02-19 17:14:30.403 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #47, Number of conflicts #1
+2023-02-19 17:14:30.771 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #48, Number of conflicts #1
+2023-02-19 17:14:31.132 | INFO     | core.scheduler:timetable:263 - > Room #7B, Generation #49, Number of conflicts #0
+2023-02-19 17:14:31.157 | INFO     | core.scheduler:timetable:290 - > Schedule #7B, Number of conflicts #0 
+   Room          2          3          4         5         6              7
+1   7B    Chao Co    Ly_Ly02   Hoa_Ho02   Su_Su01   CN_To02      Sinh_Si02
+2   7B   Anh_An02   Tin_Ti02  Toan_To02   Ly_Ly02  The_Th02      Toan_To02
+3   7B  Toan_To02  GDCD_GD01  Toan_To02  Tin_Ti02  Dia_Di01        Ly_Ly02
+4   7B   Van_Va02  Sinh_Si02   Van_Va02  Anh_An02  Van_Va02       Hoa_Ho02
+5   7B   Hoa_Ho02   The_Th02   Van_Va02                      Sinh Hoat Lop
+2023-02-19 17:14:31.674 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #1, Number of conflicts #14
+2023-02-19 17:14:32.047 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #2, Number of conflicts #14
+2023-02-19 17:14:32.421 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #3, Number of conflicts #13
+2023-02-19 17:14:32.799 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #4, Number of conflicts #12
+2023-02-19 17:14:33.174 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #5, Number of conflicts #12
+2023-02-19 17:14:33.553 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #6, Number of conflicts #12
+2023-02-19 17:14:33.918 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #7, Number of conflicts #12
+2023-02-19 17:14:34.285 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #8, Number of conflicts #12
+2023-02-19 17:14:34.647 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #9, Number of conflicts #8
+2023-02-19 17:14:35.015 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #10, Number of conflicts #8
+2023-02-19 17:14:35.376 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #11, Number of conflicts #8
+2023-02-19 17:14:35.752 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #12, Number of conflicts #8
+2023-02-19 17:14:36.119 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #13, Number of conflicts #8
+2023-02-19 17:14:36.486 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #14, Number of conflicts #8
+2023-02-19 17:14:36.868 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #15, Number of conflicts #8
+2023-02-19 17:14:37.234 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #16, Number of conflicts #8
+2023-02-19 17:14:37.607 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #17, Number of conflicts #8
+2023-02-19 17:14:37.966 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #18, Number of conflicts #8
+2023-02-19 17:14:38.344 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #19, Number of conflicts #8
+2023-02-19 17:14:38.714 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #20, Number of conflicts #8
+2023-02-19 17:14:39.092 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #21, Number of conflicts #8
+2023-02-19 17:14:39.462 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #22, Number of conflicts #8
+2023-02-19 17:14:39.841 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #23, Number of conflicts #8
+2023-02-19 17:14:40.211 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #24, Number of conflicts #8
+2023-02-19 17:14:40.572 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #25, Number of conflicts #8
+2023-02-19 17:14:40.937 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #26, Number of conflicts #8
+2023-02-19 17:14:41.311 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #27, Number of conflicts #7
+2023-02-19 17:14:41.671 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #28, Number of conflicts #7
+2023-02-19 17:14:42.056 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #29, Number of conflicts #7
+2023-02-19 17:14:42.407 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #30, Number of conflicts #7
+2023-02-19 17:14:42.782 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #31, Number of conflicts #7
+2023-02-19 17:14:43.150 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #32, Number of conflicts #6
+2023-02-19 17:14:43.525 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #33, Number of conflicts #6
+2023-02-19 17:14:43.892 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #34, Number of conflicts #4
+2023-02-19 17:14:44.267 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #35, Number of conflicts #4
+2023-02-19 17:14:44.644 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #36, Number of conflicts #4
+2023-02-19 17:14:45.075 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #37, Number of conflicts #4
+2023-02-19 17:14:45.453 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #38, Number of conflicts #4
+2023-02-19 17:14:45.890 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #39, Number of conflicts #4
+2023-02-19 17:14:46.296 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #40, Number of conflicts #3
+2023-02-19 17:14:46.671 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #41, Number of conflicts #3
+2023-02-19 17:14:47.064 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #42, Number of conflicts #2
+2023-02-19 17:14:47.445 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #43, Number of conflicts #2
+2023-02-19 17:14:47.831 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #44, Number of conflicts #2
+2023-02-19 17:14:48.256 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #45, Number of conflicts #2
+2023-02-19 17:14:48.654 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #46, Number of conflicts #2
+2023-02-19 17:14:49.031 | INFO     | core.scheduler:timetable:263 - > Room #7C, Generation #47, Number of conflicts #0
+2023-02-19 17:14:49.056 | INFO     | core.scheduler:timetable:290 - > Schedule #7C, Number of conflicts #0 
+   Room          2         3          4         5          6              7
+1   7C    Chao Co  The_Th02  GDCD_GD01   CN_To02   Hoa_Ho02        Ly_Ly02
+2   7C  Sinh_Si02  Van_Va02    Su_Su01  The_Th02  Toan_To02        Ly_Ly02
+3   7C   Anh_An02  Hoa_Ho02  Sinh_Si02  Van_Va02  Toan_To02       Van_Va02
+4   7C  Toan_To02  Hoa_Ho02  Toan_To02  Van_Va02   Anh_An02       Dia_Di01
+5   7C    Ly_Ly02             Tin_Ti02             Tin_Ti02  Sinh Hoat Lop
