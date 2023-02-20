@@ -16,8 +16,8 @@ POPULATION_SIZE = int(os.getenv("POPULATION_SIZE", "300"))
 NUMB_OF_ELITE_SCHEDULES = int(os.getenv("NUMB_OF_ELITE_SCHEDULES", "2"))
 TOURNAMENT_SELECTION_SIZE = int(os.getenv("TOURNAMENT_SELECTION_SIZE", "4"))
 CROSSOVER_RATE = float(os.getenv("CROSSOVER_RATE", "0.90"))
-MUTATION_RATE = float(os.getenv("MUTATION_RATE", "0.03"))
-TIMEOUT = int(os.getenv("TIMEOUT", "300"))
+MUTATION_RATE = float(os.getenv("MUTATION_RATE", "0.05"))
+TIMEOUT = int(os.getenv("TIMEOUT", "60"))
 
 
 class Schedule:
@@ -230,11 +230,16 @@ def timetable(path=None, data=None):
         json.dump(data, f, indent=2)
     data = Data(data)
 
-    # optimize each classroom
+    # global
     last_classroom = None
     last_lesson = defaultdict(list)
 
-    for classroom in data.get_classrooms():
+    # optimize each classroom
+    room_idx = 0
+    while room_idx < len(data.get_classrooms()):
+        classroom = data.get_classrooms()[room_idx]
+        next_room = True
+
         # update free times for instructor
         if last_classroom is not None:
             for lesson in schedule:
@@ -262,6 +267,9 @@ def timetable(path=None, data=None):
             schedule = population.get_schedules()[0].get_classes()
             logger.info('> Room #{}, Generation #{}, Number of conflicts #{}'.format(classroom, generation_num, population.get_schedules()[0]._numberOfConflicts))
             if time.time() - start_time > TIMEOUT:
+                next_room = False
+                room_idx -= 1
+                logger.info('> Time Limit Exceeded')
                 break
 
         last_classroom = classroom
@@ -290,6 +298,10 @@ def timetable(path=None, data=None):
         logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(classroom, population.get_schedules()[0]._numberOfConflicts, new_df.to_string()))
         with open(os.path.join(path, "{}_{}.json".format(classroom, population.get_schedules()[0]._numberOfConflicts)), "w") as f:
             json.dump(new_df.to_dict('records'), f, indent=2)
+
+        # next
+        if next_room:
+            room_idx += 1
 
     # kill thread
     sys.exit()

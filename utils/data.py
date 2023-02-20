@@ -28,7 +28,7 @@ class Data(object):
 
     instructors = {}
     for classroom in self.data:
-      for subject in classroom["subject"]:
+      for subject in classroom["subjects"]:
         if subject['instructor'] not in instructors:
           instructors[subject['instructor']] = len(instructors)
           self.instructors.append(Instructor(name=subject['instructor'], classroom='', free_times=self.free_times))
@@ -45,7 +45,7 @@ class Data(object):
 
     for classroom in self.data:
       subjects = []
-      for subject in classroom['subject']:
+      for subject in classroom['subjects']:
         subjects.append(Subject(name=subject['name'], n_lessons=subject['n_lessons'], instructor=instructors[subject['instructor']]))
       self.classrooms.append(Classroom(name=classroom['name'], subjects=subjects))
 
