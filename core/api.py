@@ -214,15 +214,8 @@ def run_app(api_host='0.0.0.0', api_port=8080, debug=True):
             # load schedule
             with open(schedule_file) as f:
                 schedule = json.load(f)
-            classroom, n_conflicts = os.path.splitext(os.path.basename(schedule_file))[0].split('_')
-            n_conflicts = int(n_conflicts)
-            if n_conflicts != 0:
-                continue
-
-            if classroom not in result:
-                result[classroom] = {}
-            result[classroom]['schedule'] = schedule
-            result[classroom]['n_conflicts'] = n_conflicts
+            classroom = os.path.splitext(os.path.basename(schedule_file))[0]
+            result[classroom] = schedule
 
         return JSONResponse(content=result, status_code=200)
 

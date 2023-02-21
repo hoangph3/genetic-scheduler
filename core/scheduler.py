@@ -13,13 +13,13 @@ import time
 from utils.data import Data
 
 
-POPULATION_SIZE = int(os.getenv("POPULATION_SIZE", "300"))
+POPULATION_SIZE = int(os.getenv("POPULATION_SIZE", "100"))
 NUMB_OF_ELITE_SCHEDULES = int(os.getenv("NUMB_OF_ELITE_SCHEDULES", "2"))
 TOURNAMENT_SELECTION_SIZE = int(os.getenv("TOURNAMENT_SELECTION_SIZE", "4"))
 CROSSOVER_RATE = float(os.getenv("CROSSOVER_RATE", "0.90"))
 MUTATION_RATE = float(os.getenv("MUTATION_RATE", "0.05"))
 JOB_TIMEOUT = int(os.getenv("JOB_TIMEOUT", "60"))
-THREAD_TIMEOUT = int(os.getenv("THREAD_TIMEOUT", "600"))
+THREAD_TIMEOUT = int(os.getenv("THREAD_TIMEOUT", "1200"))
 
 
 class Schedule:
@@ -73,8 +73,8 @@ class Schedule:
                             if math.fabs(classes[i].meeting_time.day - classes[j].meeting_time.day) == 1:
                                 self._numberOfConflicts += 1
                             if classes[i].meeting_time.day == classes[j].meeting_time.day:
-                                # constraint subjects with less than 3 lessons
-                                if classes[i].subject.n_lessons <= 3:
+                                # constraint subjects with less than 2 lessons
+                                if classes[i].subject.n_lessons <= 2:
                                     self._numberOfConflicts += 1
                                 else:
                                     if math.fabs(classes[i].meeting_time.lesson - classes[j].meeting_time.lesson) >= 2:
@@ -259,6 +259,7 @@ def timetable(path=None, data=None):
 
     # global vars
     last_classroom = None
+    last_schedule = None
     last_lesson = defaultdict(list)
 
     # optimize per batch
@@ -267,14 +268,15 @@ def timetable(path=None, data=None):
         batch_data = Data(batch_data)
         # optimize per classroom
         room_idx = 0
+        next_room = True
         while room_idx < len(batch_data.get_classrooms()):
             classroom = batch_data.get_classrooms()[room_idx]
-            next_room = True
-
             # update free times for instructor
-            if last_classroom is not None:
-                for lesson in schedule:
-                    last_lesson[str(lesson.instructor)].append(str(lesson.meeting_time))
+            if (last_classroom is not None) and (last_schedule is not None):
+                if next_room:
+                    for lesson in last_schedule:
+                        if str(lesson.meeting_time) not in last_lesson[str(lesson.instructor)]:
+                            last_lesson[str(lesson.instructor)].append(str(lesson.meeting_time))
 
                 for subject in classroom.subjects:
                     if str(subject.instructor) in last_lesson:
@@ -306,36 +308,33 @@ def timetable(path=None, data=None):
                     logger.error('Threading Time Limit Exceeded!')
                     os.kill(os.getpid(), signal.SIGKILL)
 
-            last_classroom = classroom
-            # save valid schedule
-            df = []
-            for lesson in schedule:
-                df.append(
-                    {
-                        "classroom": str(lesson.room),
-                        "subject": str(lesson.subject),
-                        "day": str(lesson.meeting_time.day),
-                        "lesson": int(lesson.meeting_time.lesson),
-                        "instructor": str(lesson.instructor)
-                    }
-                )
-            df = pd.DataFrame(df)
-            df = df.sort_values(by=["day", "lesson"], inplace=False).to_dict("records")
-            new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=['Room', '2', '3', '4', '5', '6', '7'])
-            for d in df:
-                new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
-            new_df.loc[1, '2'] = "Chao Co"
-            new_df.loc[5, '7'] = "Sinh Hoat Lop"
-            new_df['Room'] = str(classroom)
-            new_df = new_df.fillna("", inplace=False)
+            if not population.get_schedules()[0]._numberOfConflicts:
+                next_room = True
 
-            logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(classroom, population.get_schedules()[0]._numberOfConflicts, new_df.to_string()))
-            with open(os.path.join(path, "{}_{}.json".format(classroom, population.get_schedules()[0]._numberOfConflicts)), "w") as f:
-                json.dump(new_df.to_dict('records'), f, indent=2)
-
-            # next
             if next_room:
                 room_idx += 1
+                last_classroom = classroom
+                last_schedule = schedule
+
+                # save only valid schedule
+                result = {}
+                idx2days = {'2': 'Monday', '3': 'Tuesday', '4': 'Wednesday', '5': 'Thursday', '6': 'Friday', '7': 'Saturday'}
+                for idx, day in idx2days.items():
+                    result[day] = ['' for _ in range(5)]
+                for lesson in schedule:
+                    result[idx2days[str(lesson.meeting_time.day)]][lesson.meeting_time.lesson - 1] = "{}_{}".format(lesson.subject, lesson.instructor)
+                result['Monday'][0] = 'Chao Co'
+                result['Saturday'][4] = 'SH Lop'
+
+                logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(classroom, population.get_schedules()[0]._numberOfConflicts, pd.DataFrame(result).to_string()))
+                with open(os.path.join(path, "{}.json".format(classroom)), "w") as f:
+                    json.dump(result, f, indent=2)
+
+            else: # remove meeting time
+                if (last_classroom is not None) and (last_schedule is not None):
+                    for lesson in last_schedule:
+                        if str(lesson.meeting_time) in last_lesson[str(lesson.instructor)]:
+                            last_lesson[str(lesson.instructor)].remove(str(lesson.meeting_time))
 
     # terminate
     os.kill(os.getpid(), signal.SIGKILL)
