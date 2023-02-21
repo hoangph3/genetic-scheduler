@@ -3,6 +3,7 @@ from loguru import logger
 import random as rnd
 import pandas as pd
 import numpy as np
+import signal
 import json
 import math
 import sys
@@ -17,7 +18,8 @@ NUMB_OF_ELITE_SCHEDULES = int(os.getenv("NUMB_OF_ELITE_SCHEDULES", "2"))
 TOURNAMENT_SELECTION_SIZE = int(os.getenv("TOURNAMENT_SELECTION_SIZE", "4"))
 CROSSOVER_RATE = float(os.getenv("CROSSOVER_RATE", "0.90"))
 MUTATION_RATE = float(os.getenv("MUTATION_RATE", "0.05"))
-TIMEOUT = int(os.getenv("TIMEOUT", "60"))
+JOB_TIMEOUT = int(os.getenv("JOB_TIMEOUT", "60"))
+THREAD_TIMEOUT = int(os.getenv("THREAD_TIMEOUT", "600"))
 
 
 class Schedule:
@@ -71,8 +73,8 @@ class Schedule:
                             if math.fabs(classes[i].meeting_time.day - classes[j].meeting_time.day) == 1:
                                 self._numberOfConflicts += 1
                             if classes[i].meeting_time.day == classes[j].meeting_time.day:
-                                # constraint subjects with less than 2 lessons
-                                if classes[i].subject.n_lessons <= 2:
+                                # constraint subjects with less than 3 lessons
+                                if classes[i].subject.n_lessons <= 3:
                                     self._numberOfConflicts += 1
                                 else:
                                     if math.fabs(classes[i].meeting_time.lesson - classes[j].meeting_time.lesson) >= 2:
@@ -225,83 +227,115 @@ def timetable(path=None, data=None):
         os.makedirs(path)
     logger.add(os.path.join(path, 'schedule.log'), rotation="50 MB")
 
-    # data loader
+    # group classrooms by instructors
+    groupby_instructors = defaultdict(list)
+    all_classrooms = {}
+    for d in data:
+        all_classrooms[d['name']] = d
+        for subject in d['subjects']:
+            # only main subjects
+            if (subject['n_lessons'] >= 3) and (d['name'] not in groupby_instructors[subject['instructor']]):
+                groupby_instructors[subject['instructor']].append(d['name'])
+    group_classrooms = set(list(map(tuple, groupby_instructors.values())))
+    group_classrooms = list(map(list, group_classrooms))
+
+    # other classrooms
+    other_classrooms = []
+    for group_classroom in group_classrooms:
+        for room in group_classroom:
+            if room not in all_classrooms:
+                other_classrooms.append(room)
+
+    # aggregate classrooms
+    group_classrooms.append(other_classrooms)
+    group_classrooms = [x for x in group_classrooms if len(x)]
+    for i in range(len(group_classrooms)):
+        for j in range(len(group_classrooms[i])):
+            group_classrooms[i][j] = all_classrooms[group_classrooms[i][j]]
+
+    # save data
     with open(os.path.join(path, "data.txt"), "w") as f:
         json.dump(data, f, indent=2)
-    data = Data(data)
 
-    # global
+    # global vars
     last_classroom = None
     last_lesson = defaultdict(list)
 
-    # optimize each classroom
-    room_idx = 0
-    while room_idx < len(data.get_classrooms()):
-        classroom = data.get_classrooms()[room_idx]
-        next_room = True
+    # optimize per batch
+    process_start = time.time()
+    for batch_data in group_classrooms:
+        batch_data = Data(batch_data)
+        # optimize per classroom
+        room_idx = 0
+        while room_idx < len(batch_data.get_classrooms()):
+            classroom = batch_data.get_classrooms()[room_idx]
+            next_room = True
 
-        # update free times for instructor
-        if last_classroom is not None:
-            for lesson in schedule:
-                last_lesson[str(lesson.instructor)].append(str(lesson.meeting_time))
+            # update free times for instructor
+            if last_classroom is not None:
+                for lesson in schedule:
+                    last_lesson[str(lesson.instructor)].append(str(lesson.meeting_time))
 
-            for subject in classroom.subjects:
-                if str(subject.instructor) in last_lesson:
-                    new_free_times = {}
-                    for k, v in data.get_free_times().items():
-                        if k not in last_lesson[str(subject.instructor)]:
-                            new_free_times[k] = v
-                    subject.instructor.free_times = new_free_times
+                for subject in classroom.subjects:
+                    if str(subject.instructor) in last_lesson:
+                        new_free_times = {}
+                        for k, v in batch_data.get_free_times().items():
+                            if k not in last_lesson[str(subject.instructor)]:
+                                new_free_times[k] = v
+                        subject.instructor.free_times = new_free_times
 
-        # generate schedule per classroom
-        schedule = []
-        population = Population(POPULATION_SIZE, classroom)
-        generation_num = 0
-        population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
-        geneticAlgorithm = GeneticAlgorithm(classroom)
-        start_time = time.time()
-        while population.get_schedules()[0].get_fitness() != 1.0:
-            generation_num += 1
-            population = geneticAlgorithm.evolve(population)
+            # generate schedule per classroom
+            schedule = []
+            population = Population(POPULATION_SIZE, classroom)
+            generation_num = 0
             population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
-            schedule = population.get_schedules()[0].get_classes()
-            logger.info('> Room #{}, Generation #{}, Number of conflicts #{}'.format(classroom, generation_num, population.get_schedules()[0]._numberOfConflicts))
-            if time.time() - start_time > TIMEOUT:
-                next_room = False
-                room_idx -= 1
-                logger.info('> Time Limit Exceeded')
-                break
+            geneticAlgorithm = GeneticAlgorithm(classroom)
+            job_start = time.time()
+            while population.get_schedules()[0].get_fitness() != 1.0:
+                generation_num += 1
+                population = geneticAlgorithm.evolve(population)
+                population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
+                schedule = population.get_schedules()[0].get_classes()
+                logger.info('> Room #{}, Generation #{}, Number of conflicts #{}'.format(classroom, generation_num, population.get_schedules()[0]._numberOfConflicts))
+                if time.time() - job_start > JOB_TIMEOUT:
+                    next_room = False
+                    room_idx -= 1
+                    logger.warning('> Job Time Limit Exceeded!')
+                    break
+                if time.time() - process_start > THREAD_TIMEOUT:
+                    logger.error('Threading Time Limit Exceeded!')
+                    os.kill(os.getpid(), signal.SIGKILL)
 
-        last_classroom = classroom
-        # save valid schedule
-        df = []
-        for lesson in schedule:
-            df.append(
-                {
-                    "classroom": str(lesson.room),
-                    "subject": str(lesson.subject),
-                    "day": str(lesson.meeting_time.day),
-                    "lesson": int(lesson.meeting_time.lesson),
-                    "instructor": str(lesson.instructor)
-                }
-            )
-        df = pd.DataFrame(df)
-        df = df.sort_values(by=["day", "lesson"], inplace=False).to_dict("records")
-        new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=['Room', '2', '3', '4', '5', '6', '7'])
-        for d in df:
-            new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
-        new_df.loc[1, '2'] = "Chao Co"
-        new_df.loc[5, '7'] = "Sinh Hoat Lop"
-        new_df['Room'] = str(classroom)
-        new_df = new_df.fillna("", inplace=False)
+            last_classroom = classroom
+            # save valid schedule
+            df = []
+            for lesson in schedule:
+                df.append(
+                    {
+                        "classroom": str(lesson.room),
+                        "subject": str(lesson.subject),
+                        "day": str(lesson.meeting_time.day),
+                        "lesson": int(lesson.meeting_time.lesson),
+                        "instructor": str(lesson.instructor)
+                    }
+                )
+            df = pd.DataFrame(df)
+            df = df.sort_values(by=["day", "lesson"], inplace=False).to_dict("records")
+            new_df = pd.DataFrame(np.nan, index=[1, 2, 3, 4, 5], columns=['Room', '2', '3', '4', '5', '6', '7'])
+            for d in df:
+                new_df.loc[d["lesson"], d["day"]] = d["subject"] + "_" + d["instructor"]
+            new_df.loc[1, '2'] = "Chao Co"
+            new_df.loc[5, '7'] = "Sinh Hoat Lop"
+            new_df['Room'] = str(classroom)
+            new_df = new_df.fillna("", inplace=False)
 
-        logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(classroom, population.get_schedules()[0]._numberOfConflicts, new_df.to_string()))
-        with open(os.path.join(path, "{}_{}.json".format(classroom, population.get_schedules()[0]._numberOfConflicts)), "w") as f:
-            json.dump(new_df.to_dict('records'), f, indent=2)
+            logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(classroom, population.get_schedules()[0]._numberOfConflicts, new_df.to_string()))
+            with open(os.path.join(path, "{}_{}.json".format(classroom, population.get_schedules()[0]._numberOfConflicts)), "w") as f:
+                json.dump(new_df.to_dict('records'), f, indent=2)
 
-        # next
-        if next_room:
-            room_idx += 1
+            # next
+            if next_room:
+                room_idx += 1
 
-    # kill thread
-    sys.exit()
+    # terminate
+    os.kill(os.getpid(), signal.SIGKILL)

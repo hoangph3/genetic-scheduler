@@ -1,5 +1,6 @@
 from typing import *
 from threading import Thread, Event, Lock
+from multiprocessing import Process
 from fastapi import FastAPI, Request, Body, Response
 from fastapi.openapi.docs import (
     get_redoc_html,
@@ -168,7 +169,7 @@ def run_app(api_host='0.0.0.0', api_port=8080, debug=True):
         schedule_id = int(time.time())
         path = os.path.join(logs_dir, str(schedule_id))
 
-        Thread(target=timetable, args=(path, data.classrooms)).start()
+        Process(target=timetable, args=(path, data.classrooms)).start()
 
         content = {
             "message": "Generating schedule ...",
