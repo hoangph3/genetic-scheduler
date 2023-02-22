@@ -1,17 +1,16 @@
 from typing import *
-from threading import Thread, Event, Lock
 from multiprocessing import Process
-from fastapi import FastAPI, Request, Body, Response
+from fastapi import FastAPI
 from fastapi.openapi.docs import (
     get_redoc_html,
     get_swagger_ui_html,
     get_swagger_ui_oauth2_redirect_html,
 )
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from pathlib import Path
+import pandas as pd
 import uvicorn
 import time
 import os
@@ -218,6 +217,32 @@ def run_app(api_host='0.0.0.0', api_port=8080, debug=True):
             result[classroom] = schedule
 
         return JSONResponse(content=result, status_code=200)
+
+
+    @app.get("/schedule/download/{schedule_id}")
+    async def download_schedule(schedule_id: int):
+        if not os.path.exists(os.path.join(logs_dir, str(schedule_id))):
+            content = {
+                "message": "Invalid schedule id",
+                "schedule_id": schedule_id
+            }
+            return JSONResponse(content=content, status_code=200)
+        dfs = []
+        for schedule_file in sorted(Path(os.path.join(logs_dir, str(schedule_id))).glob('*.json')):
+            # load schedule
+            with open(schedule_file) as f:
+                schedule = json.load(f)
+            classroom = os.path.splitext(os.path.basename(schedule_file))[0]
+            df = pd.DataFrame(schedule)
+            df['Room'] = classroom
+            dfs.append(df)
+        dfs = pd.concat(dfs)
+
+        return StreamingResponse(
+            iter([dfs.to_csv(index=False)]),
+            media_type="text/csv",
+            headers={"Content-Disposition": f"attachment; filename={schedule_id}.csv"}
+        )
 
 
     uvicorn.run(app, host=api_host, port=api_port)

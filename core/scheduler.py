@@ -2,22 +2,20 @@ from collections import defaultdict
 from loguru import logger
 import random as rnd
 import pandas as pd
-import numpy as np
 import signal
 import json
 import math
-import sys
 import os
 import time
 
 from utils.data import Data
 
 
-POPULATION_SIZE = int(os.getenv("POPULATION_SIZE", "100"))
+POPULATION_SIZE = int(os.getenv("POPULATION_SIZE", "300"))
 NUMB_OF_ELITE_SCHEDULES = int(os.getenv("NUMB_OF_ELITE_SCHEDULES", "2"))
 TOURNAMENT_SELECTION_SIZE = int(os.getenv("TOURNAMENT_SELECTION_SIZE", "4"))
 CROSSOVER_RATE = float(os.getenv("CROSSOVER_RATE", "0.90"))
-MUTATION_RATE = float(os.getenv("MUTATION_RATE", "0.05"))
+MUTATION_RATE = float(os.getenv("MUTATION_RATE", "0.03"))
 JOB_TIMEOUT = int(os.getenv("JOB_TIMEOUT", "60"))
 THREAD_TIMEOUT = int(os.getenv("THREAD_TIMEOUT", "1200"))
 
@@ -236,7 +234,7 @@ def timetable(path=None, data=None):
             # only main subjects
             if (subject['n_lessons'] >= 3) and (d['name'] not in groupby_instructors[subject['instructor']]):
                 groupby_instructors[subject['instructor']].append(d['name'])
-    group_classrooms = set(list(map(tuple, groupby_instructors.values())))
+    group_classrooms = set(list(map(tuple, sorted(groupby_instructors.values()))))
     group_classrooms = list(map(list, group_classrooms))
 
     # other classrooms
@@ -249,6 +247,7 @@ def timetable(path=None, data=None):
     # aggregate classrooms
     group_classrooms.append(other_classrooms)
     group_classrooms = [x for x in group_classrooms if len(x)]
+    group_classrooms = sorted(group_classrooms)
     for i in range(len(group_classrooms)):
         for j in range(len(group_classrooms[i])):
             group_classrooms[i][j] = all_classrooms[group_classrooms[i][j]]
@@ -258,9 +257,7 @@ def timetable(path=None, data=None):
         json.dump(data, f, indent=2)
 
     # global vars
-    last_classroom = None
-    last_schedule = None
-    last_lesson = defaultdict(list)
+    temp_lessons = defaultdict(lambda: defaultdict(list))
 
     # optimize per batch
     process_start = time.time()
@@ -268,23 +265,19 @@ def timetable(path=None, data=None):
         batch_data = Data(batch_data)
         # optimize per classroom
         room_idx = 0
-        next_room = True
         while room_idx < len(batch_data.get_classrooms()):
             classroom = batch_data.get_classrooms()[room_idx]
             # update free times for instructor
-            if (last_classroom is not None) and (last_schedule is not None):
-                if next_room:
-                    for lesson in last_schedule:
-                        if str(lesson.meeting_time) not in last_lesson[str(lesson.instructor)]:
-                            last_lesson[str(lesson.instructor)].append(str(lesson.meeting_time))
-
-                for subject in classroom.subjects:
-                    if str(subject.instructor) in last_lesson:
-                        new_free_times = {}
-                        for k, v in batch_data.get_free_times().items():
-                            if k not in last_lesson[str(subject.instructor)]:
-                                new_free_times[k] = v
-                        subject.instructor.free_times = new_free_times
+            for subject in classroom.subjects:
+                if str(subject.instructor) in temp_lessons:
+                    free_times = {}
+                    busy_times = []
+                    for room, time_slots in temp_lessons[str(subject.instructor)].items():
+                        busy_times.extend(time_slots)
+                    for meeting_time in batch_data.get_free_times():
+                        if meeting_time not in busy_times:
+                            free_times[meeting_time] = batch_data.get_free_times()[meeting_time]
+                    subject.instructor.free_times = free_times
 
             # generate schedule per classroom
             schedule = []
@@ -300,41 +293,37 @@ def timetable(path=None, data=None):
                 schedule = population.get_schedules()[0].get_classes()
                 logger.info('> Room #{}, Generation #{}, Number of conflicts #{}'.format(classroom, generation_num, population.get_schedules()[0]._numberOfConflicts))
                 if time.time() - job_start > JOB_TIMEOUT:
-                    next_room = False
-                    room_idx -= 1
                     logger.warning('> Job Time Limit Exceeded!')
                     break
                 if time.time() - process_start > THREAD_TIMEOUT:
                     logger.error('Threading Time Limit Exceeded!')
                     os.kill(os.getpid(), signal.SIGKILL)
 
-            if not population.get_schedules()[0]._numberOfConflicts:
-                next_room = True
+            if population.get_schedules()[0]._numberOfConflicts:
+                # re-generate for batch
+                room_idx = 0
+                # remove meeting times
+                for temp_classroom in batch_data.get_classrooms():
+                    for temp_subject in temp_classroom.subjects:
+                        if str(temp_subject.instructor) in temp_lessons:
+                            temp_lessons[str(temp_subject.instructor)][str(temp_classroom.name)] = []
+                continue
 
-            if next_room:
-                room_idx += 1
-                last_classroom = classroom
-                last_schedule = schedule
+            # save only valid schedule
+            result = {}
+            idx2days = {'2': 'Monday', '3': 'Tuesday', '4': 'Wednesday', '5': 'Thursday', '6': 'Friday', '7': 'Saturday'}
+            for idx, day in idx2days.items():
+                result[day] = ['' for _ in range(5)]
+            for lesson in schedule:
+                result[idx2days[str(lesson.meeting_time.day)]][lesson.meeting_time.lesson - 1] = "{}_{}".format(lesson.subject, lesson.instructor)
+            result['Monday'][0] = 'Chao Co'
+            result['Saturday'][4] = 'SH Lop'
 
-                # save only valid schedule
-                result = {}
-                idx2days = {'2': 'Monday', '3': 'Tuesday', '4': 'Wednesday', '5': 'Thursday', '6': 'Friday', '7': 'Saturday'}
-                for idx, day in idx2days.items():
-                    result[day] = ['' for _ in range(5)]
-                for lesson in schedule:
-                    result[idx2days[str(lesson.meeting_time.day)]][lesson.meeting_time.lesson - 1] = "{}_{}".format(lesson.subject, lesson.instructor)
-                result['Monday'][0] = 'Chao Co'
-                result['Saturday'][4] = 'SH Lop'
+            logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(classroom, population.get_schedules()[0]._numberOfConflicts, pd.DataFrame(result).to_string()))
+            with open(os.path.join(path, "{}.json".format(classroom)), "w") as f:
+                json.dump(result, f, indent=2)
 
-                logger.info("> Schedule #{}, Number of conflicts #{} \n {}".format(classroom, population.get_schedules()[0]._numberOfConflicts, pd.DataFrame(result).to_string()))
-                with open(os.path.join(path, "{}.json".format(classroom)), "w") as f:
-                    json.dump(result, f, indent=2)
-
-            else: # remove meeting time
-                if (last_classroom is not None) and (last_schedule is not None):
-                    for lesson in last_schedule:
-                        if str(lesson.meeting_time) in last_lesson[str(lesson.instructor)]:
-                            last_lesson[str(lesson.instructor)].remove(str(lesson.meeting_time))
+            room_idx += 1
 
     # terminate
     os.kill(os.getpid(), signal.SIGKILL)
