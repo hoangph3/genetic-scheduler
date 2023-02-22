@@ -180,7 +180,7 @@ def run_app(api_host='0.0.0.0', api_port=8080, debug=True):
     @app.get("/schedule/lists")
     async def lists_schedule():
         return JSONResponse(
-            content={"schedule_id": list(map(int, os.listdir(logs_dir)))}, status_code=200
+            content={"schedule_id": list(map(int, sorted(os.listdir(logs_dir))))}, status_code=200
         )
 
 
