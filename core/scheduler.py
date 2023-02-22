@@ -309,6 +309,10 @@ def timetable(path=None, data=None):
                             temp_lessons[str(temp_subject.instructor)][str(temp_classroom.name)] = []
                 continue
 
+            # update free times for instructors
+            for lesson in schedule:
+                temp_lessons[str(lesson.instructor)][str(lesson.room)].append(str(lesson.meeting_time))
+
             # save only valid schedule
             result = {}
             idx2days = {'2': 'Monday', '3': 'Tuesday', '4': 'Wednesday', '5': 'Thursday', '6': 'Friday', '7': 'Saturday'}

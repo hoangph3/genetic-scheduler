@@ -12,7 +12,7 @@ services:
       - TOURNAMENT_SELECTION_SIZE=4
       - CROSSOVER_RATE=0.90
       - MUTATION_RATE=0.03
-      - THREAD_TIMEOUT=1200
+      - THREAD_TIMEOUT=1800
       - JOB_TIMEOUT=60
     ports:
       - "8080:8080"
